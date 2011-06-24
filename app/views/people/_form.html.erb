@@ -1,0 +1,117 @@
+<div id="person_panel" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+		<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#tabs-1"><%= PersonType.find(params[:person_type]).name %></a></li>
+		<li class="ui-state-default ui-corner-top"><a href="#tabs-2">Transcripts</a></li>
+	</ul>
+	<%= semantic_form_for @person, :remote => true do |person_f| %>
+		<%= hidden_field_tag :person_type, params[:person_type] %>
+		<div id="tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+			<%= person_f.inputs do %>
+				<%= person_f.input :person_type_id, :as => :hidden, :value => params[:person_type] %>
+				<%= person_f.input :given_name, :label => 'First Name' %>
+				<%= person_f.input :middle_name %>
+				<%= person_f.input :surname, :label => 'Last Name' %>
+				<%= person_f.input :email %>
+				<%= person_f.input :gender, :as => :radio, :collection => ["M", "F"] %>
+				<% if params[:person_type] == PersonType.student.id.to_s %>
+					<%= person_f.input :dob, :as => :date %>
+			   		<%= person_f.input :ssn, :label => 'SSN' %>
+			    	<%= person_f.input :distance_learning, :as => :boolean %>
+			    	<%= person_f.input :degree_program_id, :as => :hidden %>
+					<%= person_f.autocompleted_input :degree_program_autocomplete, :url => autocomplete_degree_program_title_people_path, :id_element => ('#' << form_tag_id(person_f.object_name, 'degree_program_id')), :label => 'Degree Program' %>
+					<%= person_f.input :date_enrolled, :as => :date %>
+					<%= person_f.input :date_graduated, :as => :date %>
+				<% elsif params[:person_type] == PersonType.faculty.id.to_s %>
+			    	<%= person_f.input :department_id, :as => :hidden %>
+					<%= person_f.autocompleted_input :department_autocomplete, :url => autocomplete_department_name_people_path, :id_element => ('#' << form_tag_id(person_f.object_name, 'department_id')), :label => 'Department' %>
+				<% elsif params[:person_type] == PersonType.administrator.id.to_s %>
+				<% end %>
+			<% end %>
+			
+			<%= person_f.semantic_fields_for :addresses do |address_f| %>
+				<%= address_f.inputs do %>
+					<%= address_f.input :address_1, :label => address_f.object.address_type.name << ' Address 1' %>
+					<%= address_f.input :address_2 %>
+					<%= address_f.input :address_3 %>
+					<%= address_f.input :city %>
+					<%= address_f.input :province %>
+					<%= address_f.input :postal_code %>
+				<% end %>
+			<% end %>
+
+			<%= person_f.semantic_fields_for :phones do |phone_f| %>
+				<%= phone_f.inputs do %>
+					<%= phone_f.input :phone_number, :label => phone_f.object.phone_type.name << ' Phone' %>
+				<% end %>
+			<% end %>
+
+			<%= person_f.buttons :class=>'buttons left_aligned_buttons' do %>
+				<%= person_f.commit_button :label => 'Submit' %>
+				<%= person_back_button %>
+			<% end %>
+		</div>
+		<div id="tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+			<div id="nested-models" class="nested-models">
+				<fieldset class="inputs">
+					<ol>
+						<li class="string optional course">
+							<span>Course</span>
+						</li>
+						<li class="string optional year">
+							<span>Year</span>
+						</li>
+						<li class="string optional term">
+							<span>Term</span>
+						</li>
+						<li class="string optional status">
+							<span>Status</span>
+						</li>
+						<li class="string optional grade">
+							<span>Grade</span>
+						</li>
+					</ol>
+				</fieldset>
+				<%= person_f.semantic_fields_for :course_takens do |course_taken_f| %>
+					<%= course_taken_f.inputs do %>
+						<%= course_taken_f.input :course, :input_html => { :class => 'course', :disabled => true } %>
+						<%= course_taken_f.input :year, :input_html => { :disabled => true } %>
+						<%= course_taken_f.input :term_type, :input_html => { :disabled => true }, :label => 'Term' %>
+						<%= course_taken_f.input :course_taken_status, :label => 'Status', :required => true %>
+						<%= course_taken_f.input :grade_type, :required => true, :label => 'Grade' %>
+						<%= delete_course_taken_button %>
+					<% end %>
+				<% end %>
+			</div>
+
+			<%= add_course_taken_button person_f %>
+
+			<%= person_f.buttons :class=>'buttons left_aligned_buttons' do %>
+				<%= person_f.commit_button :label => 'Submit' %>
+				<%= person_back_button %>
+			<% end %>
+		</div>
+	<% end %>
+</div>
+
+<script>
+$(document).ready(function(){
+	$('#person_panel').tabs({selected: 0});
+
+	// $('#nested-models fieldset:first label').css({ 'display': 'block' });
+	// $('#nested-models fieldset:first input').css({ 'display': 'block', 'clear': 'both'});
+	// $('#nested-models fieldset:first select').css({ 'display': 'block', 'clear': 'both'});
+	
+	$('.formtastic.person').live('ajax:beforeSend', function()  { $('#person_panel').hide(); $('#j-loading').show(); });
+	$('.formtastic.person').live('ajax:complete', function() { $('#j-loading').hide(); });
+	$('.formtastic.person').live('ajax:error', function() { $('#j-loading').hide(); });
+
+	// person back button
+    $(document).ready(function() {
+    	$('.person_back_button').click(function() {
+    		$('#person_panel').hide();
+    		$('#j-loading').show();
+    		$.get('<%= people_path(:search => params[:search], :person_type => params[:person_type]).gsub(/\?search/, ".js?search") %>', function() { $('#j-loading').hide(); });
+      });
+    });
+});
+</script>

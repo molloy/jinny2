@@ -1,0 +1,24 @@
+<h1>Editing phone</h1>
+
+<%= form_for(@phone) do |f| %>
+	<%= render "shared/error_messages", :target => @phone %>
+
+  <p>
+    <%= f.label :phone_type_id %><br />
+    <%= f.text_field :phone_type_id %>
+  </p>
+  <p>
+    <%= f.label :person_id %><br />
+    <%= f.text_field :person_id %>
+  </p>
+  <p>
+    <%= f.label :phone_number %><br />
+    <%= f.text_field :phone_number %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @phone %> |
+<%= link_to 'Back', phones_path %>

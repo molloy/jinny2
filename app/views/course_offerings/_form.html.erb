@@ -1,0 +1,25 @@
+<div id="errorExplanation" style="display: none;">
+</div>
+
+<%= semantic_form_for @course_offering, :html => { :multipart => true }, :format => :js do |f| %>
+	<!-- <%= render "shared/error_messages", :target => @course_offering %> -->
+	<% f.inputs do %>
+		<%= f.semantic_errors :state %>
+		<%= f.input :course_id, :as => :hidden %>
+		<%= f.autocompleted_input :course_autocomplete, :label => 'Course', :url => autocomplete_course_number_and_name_course_offerings_path, :id_element => '#course_offering_course_id', :required => true %>
+		<%= f.input :year, :required => true %>
+		<%= f.input :term_type, :required => true %>
+		<%= f.input :instructor, :as => :hidden %>
+		<%= f.autocompleted_input :instructor_autocomplete, :label => 'Instructor', :url => autocomplete_person_fullname_course_offerings_path, :id_element => '#course_offering_instructor', :required => true %>
+		<li>
+			<label>Current Syllabus</label>
+			<%= link_to @course_offering.syllabus_file_name, @course_offering.syllabus.url %>
+		</li>
+		<%= f.input :syllabus, :as => :file, :label => 'Upload New Syllabus' %>
+	<% end %>
+	
+	<% f.buttons do%>
+		<%= f.commit_button :label => 'Submit' %>
+		<%= link_to 'Back', course_offerings_path(:search_condition_params => @search_condition_params), :method => :get, :remote => true %>
+	<% end %>
+<% end %>

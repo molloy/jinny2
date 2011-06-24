@@ -1,0 +1,35 @@
+<h1>Find the Invoice</h1>
+
+<%= form_tag :url => { :action => "search" }, :update => "search_result", :result => true do %>
+	<table>
+	  <tr>
+	    <td><%= check_box_tag :invoice_number_selected %> <%= label_tag(:invoice_number, "Invoice Number") %></td>
+	    <td><%= search_method_select_tag :invoice_number %></td>
+	    <td><%= text_field_tag(:invoice_number) %></td>
+	  </tr>
+	<tr>
+		<td><%= check_box_tag :invoice_date_selected %> <%= label_tag(:invoice_date, "Invoice Date") %></td>
+		<td><%= select_tag :invoice_date_conditionoperator, "<option>between</option>" %></td>
+		<td><%= calendar_date_select_tag :invoice_date_from %> and <%= calendar_date_select_tag :invoice_date_to %></td>
+	</tr>
+	<tr>
+		<td><%= check_box_tag :bill_to_selected %> <%= label_tag(:bill_to, "Bill To") %></td>
+		<td><%= select_tag :bill_to_conditionoperator, "<option>contains</option>" %></td>
+	    <td><%= text_field_tag :bill_to_search %></td>
+	</tr>
+	</table>
+
+  <%= submit_tag("Search") %>
+<% end %>
+
+<br />
+
+<%= link_to "Show All", :url => { :action => "search", :show_all => true }, :update => "search_result", :remote => true %>
+|
+<%= link_to 'New invoice', new_invoice_path, :method => :get %>
+
+<%= content_for :search_result do %>
+<div id='search_result'>
+  <%= render :partial => "search_result" %>
+</div>
+<% end %>

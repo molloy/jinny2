@@ -1,0 +1,32 @@
+<h1>Editing degree</h1>
+
+<%= form_for(@degree) do |f| %>
+	<%= render "shared/error_messages", :target => @degree %>
+
+  <p>
+    <%= f.label :person_id %><br />
+    <%= f.text_field :person_id %>
+  </p>
+  <p>
+    <%= f.label :major_id %><br />
+    <%= f.text_field :major_id %>
+  </p>
+  <p>
+    <%= f.label :institution %><br />
+    <%= f.text_field :institution %>
+  </p>
+  <p>
+    <%= f.label :earned %><br />
+    <%= f.check_box :earned %>
+  </p>
+  <p>
+    <%= f.label :earned_date %><br />
+    <%= f.date_select :earned_date %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @degree %> |
+<%= link_to 'Back', degrees_path %>

@@ -1,0 +1,16 @@
+<h1>Editing person_type</h1>
+
+<%= form_for(@person_type) do |f| %>
+	<%= render "shared/error_messages", :target => @person_type %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @person_type %> |
+<%= link_to 'Back', person_types_path %>

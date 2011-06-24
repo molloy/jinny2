@@ -1,0 +1,2 @@
+module CourseTakensHelper
+end

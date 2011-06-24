@@ -1,0 +1,28 @@
+<p>
+  <b>Person:</b>
+  <%=h @course_taken.person_id %>
+</p>
+
+<p>
+  <b>Course offering:</b>
+  <%=h @course_taken.course_offering_id %>
+</p>
+
+<p>
+  <b>Course taken status:</b>
+  <%=h @course_taken.course_taken_status_id %>
+</p>
+
+<p>
+  <b>Grade type:</b>
+  <%=h @course_taken.grade_type_id %>
+</p>
+
+<p>
+  <b>Evaluation:</b>
+  <%=h @course_taken.evaluation %>
+</p>
+
+
+<%= link_to 'Edit', edit_course_taken_path(@course_taken) %> |
+<%= link_to 'Back', course_takens_path %>

@@ -1,0 +1,26 @@
+<% unless @invoices.nil? %>
+	<table class="search_result">
+	  <tr>
+	    <th>No.</th>
+	    <th>Bill To</th>
+	    <th>Date</th>
+	    <th>Term</th>
+		<th>Invoice Amount</th>
+	  </tr>
+	
+	<% @invoices.each do |invoice| %>
+	  <tr>
+	    <td><%=h invoice.invoice_number %></td>
+	    <td><%=h Person.find(invoice.bill_to).full_name %></td>
+	    <td><%=h invoice.invoice_date %></td>
+	    <td><%=h invoice.invoice_term %></td>
+	    <td><%=h invoice.invoice_amount %></td>
+	    <td>
+	    	<%= link_to 'Show', invoice %>
+			<%= link_to 'Edit', edit_invoice_path(invoice) %>
+			<%= link_to 'Destroy', invoice, :confirm => 'Are you sure?', :method => :delete %>
+		</td>
+	  </tr>
+	<% end %>
+	</table>
+<% end %>

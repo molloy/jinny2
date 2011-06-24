@@ -1,0 +1,27 @@
+<div id='j-login' class='ui-widget ui-widget-content ui-corner-all' style='padding: 10px;'>
+<%= semantic_form_for @user_session do |f| %>
+	<%= render "shared/error_messages", :target => @user_session %>
+	<% f.inputs :name => 'Login' do %>
+		<%= f.input :email %>
+		<%= f.input :password %>
+		<%= f.input :remember_me, :as => 'boolean', :required => false %>
+	<% end %>
+	<% f.buttons do %>
+	 	<%= f.commit_button :label => 'Login' %>
+	<% end %>
+<% end %>
+</div>
+<script type="text/javascript">
+$(window).resize(function(){
+
+	$('#j-login').css({
+		position:'absolute',
+		left: ($(window).width() - $('#j-login').outerWidth())/2,
+		top: ($(window).height() - $('#j-login').outerHeight() - 94)/2
+	});
+
+});
+
+// To initially run the function:
+$(window).resize();	
+</script

@@ -1,0 +1,182 @@
+/* CSS Reset start */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+}
+
+/* Remember to define focus styles! */
+:focus {outline: 0;}
+* {font-size: 100.01%;}
+html {font-size: 62.5%;}
+body{
+    background:#e5e4d9 url(/images/bg-all.jpg) repeat-x 50% 0;
+    font:1em Arial, Helvetica, sans-serif;
+    margin:0;
+    color:#142835;
+    min-width:1002px;
+}
+
+/* Default */
+img{border-style:none;}
+a{
+    text-decoration:underline;
+    color:#000;
+}
+a:hover{text-decoration:none;}
+input,
+textarea,
+select{
+    vertical-align:middle;
+    font:11px Arial, Helvetica, sans-serif;
+}
+form,fieldset{
+    margin:0;
+    padding:0;
+    border-style:none;
+}
+strong{
+    font-weight: bold;
+}
+
+/* Layouts */
+#wrapper{
+    width:960px;
+    margin:0 auto;
+    padding:147px 0 0;
+    position:relative;
+}
+
+/* header */
+#header{
+    background: url(/images/bg-header-pattern.png) no-repeat 594px 0;
+    padding:2px 0px 0px 0;
+    width:958px;
+    position:absolute;
+    top:0;
+    left:0;
+}
+#header:after{
+    content:"";
+    clear:both;
+    display:block;
+}
+#header .logo{
+    background: url(/images/logo-white.png) no-repeat;
+    width:264px;
+    height:100px;
+    overflow:hidden;
+    text-indent:-9999em;
+    float:left;
+    margin:2px 0 0 -1px;
+}
+#header .logo a{
+    display:block;
+    height:100%;
+}
+
+/* main-menu */
+.main-menu{
+    padding:1px 0 13px;
+    width:960px;
+    top:109px;
+    position:absolute;
+    left:0;
+    line-height:15px;
+}
+.main-menu ul{
+    margin:0 -1px;
+    padding:0;
+    list-style:none;
+    text-transform:uppercase;
+    width:960px;
+    border-right:1px solid #fff;
+    position:relative;
+    color:#fff;
+}
+.main-menu ul:after{
+    content:"";
+    clear:both;
+    display:block;
+}
+.main-menu li{
+    float:left;
+    width:120px;
+    position:relative;
+    background: url(/images/divider1.gif) repeat-y;
+}
+.main-menu ul a{
+    display:block;
+    text-align:center;
+    color:#fff;
+    margin:0 0 0 1px;
+    text-decoration:none;
+    padding:5px 0;
+}
+
+#sidebar {
+	width: 222px;
+	float: left;
+}
+
+#j-center {
+	width: 728px;
+	float: right;
+}
+
+#nested-models.nested-models fieldset > ol > li { padding:0.5em 0; margin-top:-0.5em; margin-bottom:1em; } /* padding and negative margin juggling is for Firefox */
+#nested-models.nested-models fieldset > ol > li { display: block; float: left; padding-right: 5px; } /* clearing contained floats */
+#nested-models.nested-models fieldset > ol > li.hidden { padding: 0px; } /* clearing contained floats */
+
+#nested-models.nested-models fieldset > ol > li label { display: none; }
+#nested-models.nested-models fieldset > ol > li.string input, 
+#nested-models.nested-models fieldset > ol > li.password input, 
+#nested-models.nested-models fieldset > ol > li.numeric input,
+#nested-models.nested-models fieldset > ol > li.email input,
+#nested-models.nested-models fieldset > ol > li.url input,
+#nested-models.nested-models fieldset > ol > li.phone input,
+#nested-models.nested-models fieldset > ol > li.search input { width: 140px; }
+
+#nested-models.nested-models fieldset > ol > li[id $= "_course_input"],
+#nested-models.nested-models fieldset > ol > li[id $= "_course_autocomplete_input"],
+#nested-models.nested-models fieldset > ol > li.course { width: 280px; }
+#nested-models.nested-models fieldset > ol > li[id $= "_year_input"],
+#nested-models.nested-models fieldset > ol > li.year { width: 80px; }
+#nested-models.nested-models fieldset > ol > li[id $= "_term_type_id_input"],
+#nested-models.nested-models fieldset > ol > li[id $= "_term_type_input"],
+#nested-models.nested-models fieldset > ol > li.term { width: 80px; }
+#nested-models.nested-models fieldset > ol > li[id $= "_course_taken_status_input"],
+#nested-models.nested-models fieldset > ol > li.status { width: 100px; }
+#nested-models.nested-models fieldset > ol > li[id $= "_grade_type_input"],
+#nested-models.nested-models fieldset > ol > li.grade { width: 70px; }
+
+#nested-models.nested-models fieldset > ol > li.string input[id $= "_course_autocomplete"],
+#nested-models.nested-models fieldset > ol > li.string input[id $= "_course"] { width: 270px; }
+#nested-models.nested-models fieldset > ol > li.string input[id $= "_year"] { width: 70px; }
+#nested-models.nested-models fieldset > ol > li.string input[id $= "_term_type_id"],
+#nested-models.nested-models fieldset > ol > li.string input[id $= "_term_type"] { width: 70px; }
+#nested-models.nested-models fieldset > ol > li.string select[id $= "_course_taken_status_id"] { width: 90px; }
+#nested-models.nested-models fieldset > ol > li.string select[id $= "_grade_type_id"] { width: 60px; }
+
+table.search_result tr > th {
+	font-weight: bold;
+	text-align: left;
+	padding-right: 5px;
+}
+
+table.search_result tr > td {
+	padding-right: 5px;
+}

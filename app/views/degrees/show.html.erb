@@ -1,0 +1,28 @@
+<p>
+  <b>Person:</b>
+  <%=h @degree.person_id %>
+</p>
+
+<p>
+  <b>Major:</b>
+  <%=h @degree.major_id %>
+</p>
+
+<p>
+  <b>Institution:</b>
+  <%=h @degree.institution %>
+</p>
+
+<p>
+  <b>Earned:</b>
+  <%=h @degree.earned %>
+</p>
+
+<p>
+  <b>Earned date:</b>
+  <%=h @degree.earned_date %>
+</p>
+
+
+<%= link_to 'Edit', edit_degree_path(@degree) %> |
+<%= link_to 'Back', degrees_path %>

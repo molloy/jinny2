@@ -1,0 +1,26 @@
+<tr class="course_taken">
+<%= ct.semantic_fields_for :course_takens do |f| %>
+	<td>
+		<%= f.hidden_field :course_offering_id, :value => 'to_be_replaced_with_course_offering_id' %>
+    	<%=h f.object.person %>
+	</td>
+	<td>
+		<% if is_student %>
+			<%= course_taken_status_attending.name %>
+			<%= f.hidden_field(:course_taken_status_id, :value => course_taken_status_attending.id) %>
+		<% else %>
+			<%= f.select :course_taken_status_id, CourseTakenStatus.all.collect { |course_taken_status| [ course_taken_status.name, course_taken_status.id ] } %>
+		<% end %>
+	</td>
+	<td>
+		<% if is_student %>
+			<%= f.hidden_field(:grade_type_id, :value => grade_type_au.id) %>
+		<% else %>
+			<%= f.select :grade_type_id, GradeType.all.collect { |grade_type| [ grade_type.letter_grade, grade_type.id ] } %>
+		<% end %>
+	</td>
+	<td>
+		<%= link_to_function "remove", "$(this).up('.course_taken').remove()" %>
+	</td>
+<% end %>
+</tr>

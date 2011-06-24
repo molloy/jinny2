@@ -1,0 +1,8 @@
+<%= semantic_form_for @user_session, :remote => true do |f| %>
+	<div id="user_session_errors" style="display:none"></div>
+	<%= f.input :email %>
+	<%= f.input :password %>
+	<% f.buttons do %>
+	 	<%= f.commit_button :label => 'Login' %>
+	<% end %>
+<% end %>

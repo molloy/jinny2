@@ -1,0 +1,20 @@
+<h1>Editing grade_type</h1>
+
+<%= form_for(@grade_type) do |f| %>
+	<%= render "shared/error_messages", :target => @grade_type %>
+
+  <p>
+    <%= f.label :letter_grade %><br />
+    <%= f.text_field :letter_grade %>
+  </p>
+  <p>
+    <%= f.label :numeric_weight %><br />
+    <%= f.text_field :numeric_weight %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @grade_type %> |
+<%= link_to 'Back', grade_types_path %>

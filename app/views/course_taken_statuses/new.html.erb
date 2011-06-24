@@ -1,0 +1,15 @@
+<h1>New course_taken_status</h1>
+
+<%= form_for(@course_taken_status) do |f| %>
+	<%= render "shared/error_messages", :target => @course_taken_status %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', course_taken_statuses_path %>

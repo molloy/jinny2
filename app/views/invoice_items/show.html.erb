@@ -1,0 +1,38 @@
+<p>
+  <b>Invoice:</b>
+  <%=h @invoice_item.invoice %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @invoice_item.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @invoice_item.description %>
+</p>
+
+<p>
+  <b>Unit price:</b>
+  <%=h @invoice_item.unit_price %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%=h @invoice_item.quantity %>
+</p>
+
+<p>
+  <b>Discount:</b>
+  <%=h @invoice_item.discount %>
+</p>
+
+<p>
+  <b>Total:</b>
+  <%=h @invoice_item.total %>
+</p>
+
+
+<%= link_to 'Edit', edit_invoice_item_path(@invoice_item) %> |
+<%= link_to 'Back', invoice_items_path %>

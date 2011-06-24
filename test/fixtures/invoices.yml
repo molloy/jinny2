@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  invoice_number: MyString
+  bill_to: 1
+  bill_to_address: 1
+  remit_to: MyString
+  remit_to: 1
+  invoice_date: 2010-07-30
+  invoice_term: 1
+  invoice_amount: 9.99
+
+two:
+  invoice_number: MyString
+  bill_to: 1
+  bill_to_address: 1
+  remit_to: MyString
+  remit_to: 1
+  invoice_date: 2010-07-30
+  invoice_term: 1
+  invoice_amount: 9.99

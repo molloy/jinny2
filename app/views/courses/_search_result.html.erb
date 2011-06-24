@@ -1,0 +1,26 @@
+<% unless @courses.nil? %>
+	<table class="search_result">
+	  <tr>
+	    <th>Course #</th>
+	    <th>Course Name</th>
+		<th>Units</th>
+	    <th>Department</th>
+	  </tr>
+	
+	<% @courses.each do |course| %>
+	  <tr>
+	    <td><%= course.course_number %></td>
+	    <td><%= course.name %></td>
+	    <td><%= course.units %></td>
+	    <td><%= Department.find(course.department_id).name %></td>
+	    <td><%= link_to 'Edit', edit_course_path(course, :search => params[:search]), :remote => true %></td>
+	    <td><%= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %></td>
+	  </tr>
+	<% end %>
+	</table>
+	<script>
+	$(document).ready(function(){
+		$('.search_result a').live('ajax:complete', hideCenterPanelLoading).click(showCenterPanelLoading);
+	});
+	</script>
+<% end %>

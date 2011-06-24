@@ -1,0 +1,63 @@
+<p>
+  <b>Person type:</b>
+  <%= PersonType.find(@person.person_type_id).name %>
+</p>
+
+<p>
+  <b>First name:</b>
+  <%=h @person.given_name %>
+</p>
+
+<p>
+  <b>Middle name:</b>
+  <%=h @person.middle_name %>
+</p>
+
+<p>
+  <b>Last name:</b>
+  <%=h @person.surname %>
+</p>
+
+<p>
+  <b>Social Security Number:</b>
+  <%=h @person.ssn %>
+</p>
+
+<p>
+  <b>International Student:</b>
+  <%=h @person.international %>
+</p>
+
+<p>
+  <b>Correspondence:</b>
+  <%=h @person.correspondence %>
+</p>
+
+<br/>
+<% @person.addresses.each do |addr| %>
+<p>
+	<b>
+    <%= AddressType.find(addr.address_type_id).name %>
+	Address:</b>
+	<%=h addr.address_1 %>
+	<%=h addr.address_2 %>
+	<%=h addr.address_3 %>
+	<%=h addr.city %>
+	<%=h addr.province %>
+	<%=h addr.postal_code %>
+</p>
+<% end %>
+
+<br/>
+<% @person.phones.each do |ph| %>
+<p>
+	<b>
+    <%= PhoneType.find(ph.phone_type_id).name %>
+	Phone:</b>
+	<%=h ph.phone_number %>
+</p>
+<% end %>
+
+<br/>
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>

@@ -1,0 +1,9 @@
+--- 
+port: "8000"
+servers: 2
+pid_file: tmp/pids/mongrel.pid
+log_file: log/mongrel.log
+environment: production
+cwd: /home/jinny2/jinny2
+user: jinny2
+group: jinny2

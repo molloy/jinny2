@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  given_name: MyString
+  middle_name: MyString
+  surname: MyString
+  korean_given_name: MyString
+  korean_surname: MyString
+
+two:
+  given_name: MyString
+  middle_name: MyString
+  surname: MyString
+  korean_given_name: MyString
+  korean_surname: MyString

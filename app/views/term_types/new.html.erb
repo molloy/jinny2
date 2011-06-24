@@ -1,0 +1,19 @@
+<h1>New term_type</h1>
+
+<%= form_for(@term_type) do |f| %>
+	<%= render "shared/error_messages", :target => @term_type %>
+
+  <p>
+    <%= f.label :order %><br />
+    <%= f.text_field :order %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', term_types_path %>

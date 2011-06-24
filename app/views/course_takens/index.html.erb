@@ -1,0 +1,28 @@
+<h1>Listing course_takens</h1>
+
+<table>
+  <tr>
+    <th>Person</th>
+    <th>Course offering</th>
+    <th>Course taken status</th>
+    <th>Grade type</th>
+    <th>Evaluation</th>
+  </tr>
+
+<% @course_takens.each do |course_taken| %>
+  <tr>
+    <td><%=h course_taken.person_id %></td>
+    <td><%=h course_taken.course_offering_id %></td>
+    <td><%=h course_taken.course_taken_status_id %></td>
+    <td><%=h course_taken.grade_type_id %></td>
+    <td><%=h course_taken.evaluation %></td>
+    <td><%= link_to 'Show', course_taken %></td>
+    <td><%= link_to 'Edit', edit_course_taken_path(course_taken) %></td>
+    <td><%= link_to 'Destroy', course_taken, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New course_taken', new_course_taken_path %>

@@ -1,0 +1,61 @@
+<div id="search_course_offerings_panel" class="ui-accordion ui-widget ui-helper-reset ui-accordion-icons">
+	<h3 id="search_for_header" class="header ui-accordion-header ui-helper-reset ui-state-active ui-corner-top">
+		<span class="ui-icon ui-icon-triangle-1-s"></span>
+		<a id="find_course_link" href="#">Find Course Offerings</a>
+	</h3>
+	<div id="search_for_panel" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: block; overflow-x: auto; overflow-y: auto; padding-top: 11px; padding-bottom: 11px;">
+		<%= form_for @search, course_offerings_path, :method => :get, :remote => true do |f| %>
+		<%= f.hidden_field :course_id_equals %>
+		<%= f.hidden_field :instructor_equals %>
+		<table>
+			<tr>
+				<td><%= f.label :year_equals, "Year Offered is" %></td>
+				<td><%= f.text_field :year_equals %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :term_type_id_equals, "Term is" %></td>
+				<td><%= f.select :term_type_id_equals, options_from_collection_for_select(TermType.all, :id, :name), :include_blank => 'None' %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :course_id_equals, "Course is" %></td>
+				<td><%= autocomplete_field_tag 'course_autocomplete', (Course.find(f.object.course_id_equals).course_number_and_name unless f.object.course_id_equals.nil?), autocomplete_course_number_and_name_course_offerings_path, :id_element => '#search_course_id_equals' %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :instructor_equals, "Instructor is" %></td>
+			    <td><%= autocomplete_field_tag 'instructor_autocomplete', (Person.find(f.object.instructor_equals).full_name unless f.object.instructor_equals.nil?), autocomplete_person_fullname_course_offerings_path, :id_element => '#search_instructor_equals' %></td>
+			</tr>
+			<tr>
+				<td colspan="2">&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<%= f.submit "Search" %>&nbsp;
+					<%= search_show_all_button 'course_offering', course_offerings_path(:search => { 'show_all' => 'true' }) %>
+				</td>
+			</tr>
+		</table>
+		<% end %>
+	</div>
+	<div id="search_result_loading" class="j-loading-small" style="display: none"></div>
+	<h3 id="search_result_header" class="header ui-accordion-header ui-helper-reset ui-state-default ui-corner-top">
+		<span class="ui-icon ui-icon-triangle-1-s"></span>
+		<a href="#">Search Results</a>
+	</h3>
+	<div id="search_result_panel" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: block; overflow-x: auto; overflow-y: auto; padding-top: 11px; padding-bottom: 11px;">
+	</div>
+</div>
+
+<script>
+$(document).ready(function(){	
+	$('#course_search input[value="Search"]').click(function() {
+		$('#search_show_all').remove();
+		
+		if (!$('#department_autocomplete').val()) {
+			$('#search_department_id_equals').val(null);
+		}
+	});
+	
+	$('#course_offering_search').bind('ajax:beforeSend', function()  { $('#search_result_header').hide(); $('#search_result_panel').hide(); $('#search_result_loading').show(); });
+	$('#course_offering_search').bind('ajax:complete', function() { $('#search_result_loading').hide(); });
+});
+</script>

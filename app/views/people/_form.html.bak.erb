@@ -1,0 +1,186 @@
+<div id="errorExplanation" style="display: none;">
+</div>
+
+<%= semantic_form_for @person do |person_f| %>
+	<%= person_f.inputs do %>
+		<%= person_f.input :person_type_id, :as => :hidden, :value => params[:person_type] %>
+		<%= person_f.input :given_name %>
+		<%= person_f.input :middle_name %>
+		<%= person_f.input :surname %>
+		<%= person_f.input :email %>
+		<%= person_f.input :gender, :as => radio_button :collection => ["M", "F"] %>
+	<% end %>
+
+	<table id="person_type_student" style="display: none;">
+		<tr>
+		    <td><%= person_f.label :dob, "Date of birth" %></td>
+			<td><%= person_f.calendar_date_select :dob %></td>
+		</tr>
+		<tr>
+		    <td><%= person_f.label :ssn, "Social Security No." %></td>
+		    <td><%= person_f.text_field :ssn %></td>
+		</tr>
+		<tr>
+		    <td><%= person_f.label :international, "International Student" %></td>
+		    <td><%= person_f.check_box :international %></td>
+		</tr>
+		<tr>
+		    <td><%= person_f.label :correspondence, "Correspondence" %></td>
+		    <td><%= person_f.check_box :correspondence %></td>
+		</tr>
+		<tr>
+		    <td><%= person_f.label :degree_enrolled, "Degree Enrolled" %></td>
+		    <td><%= person_f.select(:degree_enrolled, Major.all.collect { |m| [ m.name, m.id] }) %></td>
+		</tr>
+		<tr>
+		    <td><%= person_f.label :date_enrolled, "Date Enrolled" %></td>
+			<td><%= person_f.calendar_date_select :date_enrolled %></td>
+		</tr>
+		<tr>
+		    <td><%= person_f.label :date_graduated, "Date Graduated" %></td>
+			<td><%= person_f.calendar_date_select :date_graduated %></td>
+		</tr>
+		<tr>
+		    <td><%= person_f.label :picture_file, "Picture" %></td>
+			<td><%= person_f.file_field :picture_file %></td>
+		</tr>
+	</table>
+
+	<table id="person_type_faculty" style="display: none;">
+		<tr>
+		    <td><%= person_f.label :department_id, "Department" %></td>
+		    <td><%= person_f.select(:department_id, Department.all.collect { |m| [ m.name, m.id] }) %></td>
+		</tr>
+		<tr>
+		    <td><%= person_f.label :resume_cv, "CV" %></td>
+			<td><%= person_f.file_field :resume_cv_file %></td>
+		</tr>
+	</table>
+
+	<table id="person_type_administrator" style="display: none;">
+		<tr>
+		    <td><%= person_f.label :title, "Title" %></td>
+			<td><%= person_f.text_field :title %></td>
+		</tr>
+		<tr>
+		    <td><%= person_f.label :resume_cv, "Resume" %></td>
+		    <td>
+				<%= if person_f.object.resume_cv
+					link_to(person_f.object.resume_cv_file_name, { :action => "resume_cv_data", :id => person_f.object, :file_name => person_f.object.resume_cv_file_name })
+				end %>
+				<%= person_f.file_field :resume_cv_file %>
+			</td>
+			<td><%= person_f.file_field :resume_cv_file %></td>
+		</tr>
+	</table>
+
+	<br />
+	<table>
+		<tr>
+			<%= person_f.fields_for :addresses do |address_f| %>
+				<td>
+					<table>
+						<tr>
+						    <td>
+						    	<%= AddressType.find(address_f.object.address_type_id).name %>
+						    	<%= address_f.label :address_type_id, "Address" %>
+								<%= address_f.hidden_field :address_type_id %>
+							</td>
+						</tr>
+						<tr>
+						    <td><%= address_f.label :address_1, "Address Line 1" %></td>
+						    <td><%= address_f.text_field :address_1 %></td>
+						</tr>
+						<tr>
+						    <td><%= address_f.label :address_2, "Address Line 2" %></td>
+						    <td><%= address_f.text_field :address_2 %></td>
+						</tr>
+						<tr>
+						    <td><%= address_f.label :address_3, "Address Line 3" %></td>
+						    <td><%= address_f.text_field :address_3 %></td>
+						</tr>
+						<tr>
+						    <td><%= address_f.label :city %></td>
+						    <td><%= address_f.text_field :city %></td>
+						</tr>
+						<tr>
+						    <td><%= address_f.label :province, "State" %></td>
+						    <td><%= address_f.text_field :province %></td>
+						</tr>
+						<tr>
+						    <td><%= address_f.label :postal_code, "Zip code" %></td>
+						    <td><%= address_f.text_field :postal_code %></td>
+						</tr>
+					</table>
+				</td>
+			<% end %>
+		</tr>
+	</table>
+
+	<br />
+	<table>
+		<%= person_f.fields_for :phones do |phone_f| %>
+			<tr>
+			    <td>
+			    	<%= PhoneType.find(phone_f.object.phone_type_id).name %>
+			    	<%= phone_f.label :phone_type_id, "Phone" %>
+					<%= phone_f.hidden_field :phone_type_id %>
+				</td>
+			    <td><%= phone_f.text_field :phone_number %></td>
+			</tr>
+		<% end %>
+	</table>
+
+	<% if request.path_parameters[:action] != "register" %>
+	<br/>
+	<table id="course_takens" />
+		<tr>
+			<th>Transcript</th>
+			<th>Status</th>
+			<th>Grade</th>
+		</tr>
+		<%= person_f.fields_for :course_takens do |course_taken_f| %>
+		<tr class="course_taken">
+			<td>
+				<%=h CourseOffering.find(course_taken_f.object.course_offering_id).display_name %>
+			</td>
+			<td>
+				<% if is_student %>
+					<%= CourseTakenStatus.find(course_taken_f.object.course_taken_status_id).name %>
+				<% else %>
+		    		<%= course_taken_f.select(:course_taken_status_id, CourseTakenStatus.all.collect { |cts| [ cts.name, cts.id] }) %>
+				<% end %>
+			</td>
+			<td>
+				<% if is_student %>
+					<%= GradeType.find(course_taken_f.object.grade_type_id).letter_grade %>
+				<% else %>
+			    	<%= course_taken_f.select(:grade_type_id, GradeType.all.collect { |gt| [ gt.letter_grade, gt.id] }) %>
+				<% end %>
+			</td>
+			<td>
+				<% if !is_student %>
+				<%= remove_link_unless_new_record(course_taken_f) %>
+				<% end %>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+	<br/>
+	<p>
+		<%= select_year Date.today.year %>
+		<%= submit_to_remote 'filter_by_year_btn', "Lookup courses to add by year", :url => { :action => 'filter_by_year' }, :update => 'course_offerings_by_year', :with => "'year=' + $('date_year').value" %>
+		<br/>
+		<div id="course_offerings_by_year">
+		</div>
+		<%= add_course_taken_link "Add this course", person_f %>
+	</p>
+	<% end %>
+	
+	<script type="text/javascript">
+		showSelectedPersonType();
+	</script>
+	
+	<br/>
+	<%= person_f.submit 'Submit'%>
+<% end %>

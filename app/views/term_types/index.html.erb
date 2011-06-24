@@ -1,0 +1,22 @@
+<h1>Listing term_types</h1>
+
+<table>
+  <tr>
+    <th>Order</th>
+    <th>Name</th>
+  </tr>
+
+<% @term_types.each do |term_type| %>
+  <tr>
+    <td><%=h term_type.order %></td>
+    <td><%=h term_type.name %></td>
+    <td><%= link_to 'Show', term_type %></td>
+    <td><%= link_to 'Edit', edit_term_type_path(term_type) %></td>
+    <td><%= link_to 'Destroy', term_type, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New term_type', new_term_type_path %>

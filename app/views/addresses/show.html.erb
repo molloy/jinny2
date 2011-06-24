@@ -1,0 +1,48 @@
+<p>
+  <b>Address type:</b>
+  <%=h @address.address_type_id %>
+</p>
+
+<p>
+  <b>Person:</b>
+  <%=h @address.person_id %>
+</p>
+
+<p>
+  <b>Address 1:</b>
+  <%=h @address.address_1 %>
+</p>
+
+<p>
+  <b>Address 2:</b>
+  <%=h @address.address_2 %>
+</p>
+
+<p>
+  <b>Address 3:</b>
+  <%=h @address.address_3 %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%=h @address.city %>
+</p>
+
+<p>
+  <b>Province:</b>
+  <%=h @address.province %>
+</p>
+
+<p>
+  <b>Postal code:</b>
+  <%=h @address.postal_code %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%=h @address.country %>
+</p>
+
+
+<%= link_to 'Edit', edit_address_path(@address) %> |
+<%= link_to 'Back', addresses_path %>

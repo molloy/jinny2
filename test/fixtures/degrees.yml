@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  institution: MyString
+  earned: false
+  earned_date: 2010-03-11
+
+two:
+  institution: MyString
+  earned: false
+  earned_date: 2010-03-11

@@ -1,0 +1,33 @@
+<% unless @course_offerings == nil %>
+	<table class="search_result">
+		<tr>
+			<th>
+				<%= course_offerings_search_result_header_link 'Year offered', 'year_and_term_type_id' %>
+			</th>
+			<th>
+				<%= course_offerings_search_result_header_link 'Term', 'term_type_id' %>
+			</th>
+			<th>
+				<%= course_offerings_search_result_header_link 'Course', 'course_id' %>
+			</th>
+			<th>
+				<%= course_offerings_search_result_header_link 'Instructor', 'instructor' %>
+			</th>
+		</tr>
+	
+	<% @course_offerings.each do |course_offering| %>
+		<tr>
+		  	<% @course = Course.find(course_offering.course_id) %>
+		    <td><%= course_offering.year %></td>
+		    <td><%= course_offering.term_type.name %></td>
+		    <td><%= @course.course_number_and_name %></td>
+		    <td><%= course_offering.instructor_person.full_name unless course_offering.instructor_person.nil? %></td>
+		
+			<% if is_administrator %>
+		    <td><%= link_to 'Edit', edit_course_offering_path(course_offering, :search_condition_params => @search_condition_params), :remote => true %></td>
+		    <td><%= link_to 'Destroy', course_offering, :confirm => 'Are you sure?', :method => :delete, :remote => true %></td>
+			<% end %>
+		</tr>
+	<% end %>
+	</table>
+<% end %>

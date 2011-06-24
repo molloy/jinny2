@@ -1,0 +1,13 @@
+<p>
+  <b>Letter grade:</b>
+  <%=h @grade_type.letter_grade %>
+</p>
+
+<p>
+  <b>Numeric weight:</b>
+  <%=h @grade_type.numeric_weight %>
+</p>
+
+
+<%= link_to 'Edit', edit_grade_type_path(@grade_type) %> |
+<%= link_to 'Back', grade_types_path %>

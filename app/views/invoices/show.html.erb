@@ -1,0 +1,50 @@
+<p>
+  <b>Invoice number:</b>
+  <%=h @invoice.invoice_number %>
+</p>
+
+<p>
+  <b>Bill to:</b>
+  <%=h @invoice.bill_to %>
+</p>
+
+<p>
+  <b>Bill to address:</b>
+  <%=h @invoice.bill_to_address %><br />
+  <%=h @invoice.bill_to_address_1 %><br />
+  <%=h @invoice.bill_to_address_2 %><br />
+  <%=h @invoice.bill_to_address_3 %><br />
+  <%=h @invoice.bill_to_city %><br />
+  <%=h @invoice.bill_to_province %><br />
+  <%=h @invoice.bill_to_postal_code %><br />
+</p>
+
+<p>
+  <b>Remit to:</b>
+  <%=h @invoice.remit_to %>
+  <%=h @invoice.remit_to_address_1 %><br />
+  <%=h @invoice.remit_to_address_2 %><br />
+  <%=h @invoice.remit_to_address_3 %><br />
+  <%=h @invoice.remit_to_city %><br />
+  <%=h @invoice.remit_to_province %><br />
+  <%=h @invoice.remit_to_postal_code %><br />
+</p>
+
+<p>
+  <b>Invoice date:</b>
+  <%=h @invoice.invoice_date %>
+</p>
+
+<p>
+  <b>Invoice term:</b>
+  <%=h @invoice.invoice_term %>
+</p>
+
+<p>
+  <b>Invoice amount:</b>
+  <%=h @invoice.invoice_amount %>
+</p>
+
+
+<%= link_to 'Edit', edit_invoice_path(@invoice) %> |
+<%= link_to 'Back', invoices_path %>

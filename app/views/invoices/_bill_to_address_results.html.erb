@@ -1,0 +1,4 @@
+<% logger.debug bill_to_addresses %>
+<% logger.debug "length: " %>
+<% logger.debug bill_to_addresses.length %>
+<%= select_tag "invoice[bill_to_address]", options_from_collection_for_select(bill_to_addresses, :id, :display_text) %>

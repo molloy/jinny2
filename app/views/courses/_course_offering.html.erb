@@ -1,0 +1,10 @@
+<%= f.semantic_fields_for :course_offerings, CourseOffering.new do |course_offering| %>
+	<%= course_offering.inputs do %>
+		<%= f.input :course_number_and_name, :input_html => { :size => 80, :disabled => true }, :label => 'Course' %>
+		<%= course_offering.input :year %>
+		<%= course_offering.input :term_type %>
+		<%= course_offering.input :instructor, :as => 'hidden' %>
+		<%= course_offering.autocompleted_input :instructor_autocomplete, :url => autocomplete_person_fullname_courses_path, :id_element => ('#' << form_tag_id(course_offering.object_name, 'instructor')), :required => true %>
+		<%= delete_course_offering_button %>
+	<% end %>
+<% end %>

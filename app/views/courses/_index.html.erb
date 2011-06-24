@@ -1,0 +1,56 @@
+<div id="search_courses_panel" class="ui-accordion ui-widget ui-helper-reset ui-accordion-icons">
+	<h3 id="search_for_header" class="header ui-accordion-header ui-helper-reset ui-state-active ui-corner-top">
+		<span class="ui-icon ui-icon-triangle-1-s"></span>
+		<a id="find_course_link" href="#">Find Courses</a>
+	</h3>
+	<div id="search_for_panel" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: block; overflow-x: auto; overflow-y: auto; padding-top: 11px; padding-bottom: 11px;">
+		<%= form_for @search, courses_path, :method => :get, :remote => true do |f| %>
+		<%= f.hidden_field :department_id_equals %>
+		<table>
+			<tr>
+				<td><%= f.label :course_number_contains, "Course Number contains" %></td>
+				<td><%= f.text_field :course_number_contains %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :name_contains, "Course Name contains" %></td>
+				<td><%= f.text_field :name_contains %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :department_id_is, "Department is" %></td>
+				<td><%= autocomplete_field_tag 'department_autocomplete', (Department.find(f.object.department_id_equals).name unless f.object.department_id_equals.nil?), autocomplete_department_name_courses_path, :id_element => '#search_department_id_equals' %></td>
+			</tr>
+			<tr>
+				<td colspan="2">&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<%= f.submit "Search" %>&nbsp;
+					<%= search_course_show_all_button %>
+				</td>
+			</tr>
+		</table>
+		<% end %>
+	</div>
+	<div id="search_result_loading" class="j-loading-small" style="display: none"></div>
+	<h3 id="search_result_header" class="header ui-accordion-header ui-helper-reset ui-state-default ui-corner-top">
+		<span class="ui-icon ui-icon-triangle-1-s"></span>
+		<a href="#">Search Results</a>
+	</h3>
+	<div id="search_result_panel" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: block; overflow-x: auto; overflow-y: auto; padding-top: 11px; padding-bottom: 11px;">
+	</div>
+</div>
+
+<script>
+$(document).ready(function(){	
+	$('#course_search input[value="Search"]').click(function() {
+		$('#search_show_all').remove();
+		
+		if (!$('#department_autocomplete').val()) {
+			$('#search_department_id_equals').val(null);
+		}
+	});
+	
+	$('#course_search').bind('ajax:beforeSend', function()  { $('#search_result_header').hide(); $('#search_result_panel').hide(); $('#search_result_loading').show(); });
+	$('#course_search').bind('ajax:complete', function() { $('#search_result_loading').hide(); });
+});
+</script>

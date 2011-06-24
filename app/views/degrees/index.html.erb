@@ -1,0 +1,28 @@
+<h1>Listing degrees</h1>
+
+<table>
+  <tr>
+    <th>Person</th>
+    <th>Major</th>
+    <th>Institution</th>
+    <th>Earned</th>
+    <th>Earned date</th>
+  </tr>
+
+<% @degrees.each do |degree| %>
+  <tr>
+    <td><%=h degree.person_id %></td>
+    <td><%=h degree.major_id %></td>
+    <td><%=h degree.institution %></td>
+    <td><%=h degree.earned %></td>
+    <td><%=h degree.earned_date %></td>
+    <td><%= link_to 'Show', degree %></td>
+    <td><%= link_to 'Edit', edit_degree_path(degree) %></td>
+    <td><%= link_to 'Destroy', degree, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New degree', new_degree_path %>

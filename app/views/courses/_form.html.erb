@@ -1,0 +1,73 @@
+<div id="course_panel" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+		<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#tabs-1">Course</a></li>
+		<li class="ui-state-default ui-corner-top"><a href="#tabs-2">Offerings</a></li>
+	</ul>
+	<%= semantic_form_for @course, :remote => true do |f| %>
+		<%= hidden_field_tag 'search[department_id_equals]', params['search']['department_id_equals'] %>
+		<%= hidden_field_tag 'search[course_number_contains]', params['search']['course_number_contains'] %>
+		<%= hidden_field_tag 'search[name_contains]', params['search']['name_contains'] %>
+		<%= hidden_field_tag 'search[show_all]', params['search']['show_all'] %>
+	<div id="tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+		<%= render "shared/error_messages", :target => @course %>
+
+		<%= f.inputs :name => 'Courses' do %>
+			<%= f.input :course_number %>
+			<%= f.input :name %>
+			<%= f.input :description %>
+			<%= f.input :department %>
+			<%= f.input :units %>
+		<% end %>
+		
+		<%= f.buttons do%>
+			<%= f.commit_button :label => 'Submit' %>
+			<%= course_back_button %>
+		<% end %>
+	</div>
+	<div id="tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide">
+		<div id="nested-models">
+			<%= f.semantic_fields_for :course_offerings do |course_offering| %>
+				<%= course_offering.inputs do %>
+					<%= f.input :course_number_and_name, :input_html => { :size => 80, :disabled => true }, :label => 'Course' %>
+					<%= course_offering.input :year %>
+					<%= course_offering.input :term_type %>
+					<%= course_offering.input :instructor, :as => 'hidden' %>
+					<%= course_offering.autocompleted_input :instructor_autocomplete, :url => autocomplete_person_fullname_courses_path, :id_element => ('#' << form_tag_id(course_offering.object_name, 'instructor')), :required => true %>
+					<%= course_offering.hidden_field :_destroy %>
+					<%= delete_course_offering_button %>
+				<% end %>
+			<% end %>
+		</div>
+		
+		<%= add_course_offering_button f %>
+		
+		<%= f.buttons :class=>'buttons left_aligned_buttons' do %>
+			<%= f.commit_button :label => 'Submit' %>
+			<%= course_back_button %>
+		<% end %>
+	</div>
+	<% end %>
+</div>
+
+<script>
+$(document).ready(function(){
+	$('#course_panel').tabs({selected: 0});
+
+	$('#nested-models fieldset:first label').css({ 'display': 'block' });
+	$('#nested-models fieldset:first input').css({ 'display': 'block', 'clear': 'both'});
+	$('#nested-models fieldset:first select').css({ 'display': 'block', 'clear': 'both'});
+	
+	$('.formtastic.course').live('ajax:beforeSend', function()  { $('#course_panel').hide(); $('#j-loading').show(); });
+	$('.formtastic.course').live('ajax:complete', function() { $('#j-loading').hide(); });
+	$('.formtastic.course').live('ajax:error', function() { $('#j-loading').hide(); });
+
+	// course back button
+    $(document).ready(function() {
+    	$('.course_back_button').click(function() {
+    		$('#course_panel').hide();
+    		$('#j-loading').show();
+    		$.get('<%= courses_path(:search => params[:search]).gsub(/\?search/, ".js?search") %>', function() { $('#j-loading').hide(); });
+      });
+    });
+});
+</script>

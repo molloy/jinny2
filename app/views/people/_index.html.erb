@@ -1,0 +1,67 @@
+<div id="search_people_panel" class="ui-accordion ui-widget ui-helper-reset ui-accordion-icons">
+	<h3 id="search_for_header" class="header ui-accordion-header ui-helper-reset ui-state-active ui-corner-top">
+		<span class="ui-icon ui-icon-triangle-1-s"></span>
+		<a id="find_person_link" href="#">Find <%= PersonType.find(params[:person_type]).name.pluralize %></a>
+	</h3>
+	<div id="search_for_panel" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: block; overflow-x: auto; overflow-y: auto; padding-top: 11px; padding-bottom: 11px;">
+		<%= form_for @search, people_path, :method => :get, :remote => true do |f| %>
+		<%= f.hidden_field :degree_program_id_equals %>
+		<%= hidden_field_tag :person_type, params[:person_type] %>
+		<%= f.hidden_field :person_type_id_equals, :value => params[:person_type] %>
+		<table>
+			<tr>
+				<td><%= f.label :given_name_contains, "First Name contains" %></td>
+				<td><%= f.text_field :given_name_contains %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :surname_contains, "Last Name contains" %></td>
+				<td><%= f.text_field :surname_contains %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :middle_name_contains, "Middle Name contains" %></td>
+				<td><%= f.text_field :middle_name_contains %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :ssn_contains, "SSN contains" %></td>
+				<td><%= f.text_field :ssn_contains %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :degree_program_id_equals, "Degree program is" %></td>
+			    <td><%= autocomplete_field_tag 'degree_program_autocomplete', (Major.find(f.object.degree_program_id_equals).name unless f.object.degree_program_id_equals.nil?), autocomplete_degree_program_title_people_path, :id_element => '#search_degree_program_id_equals' %></td>
+			</tr>
+			<tr>
+				<td colspan="2">&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<%= f.submit "Search" %>&nbsp;
+					<%= search_person_show_all_button %>
+					<%= link_to "New", new_person_path(:person_type => params[:person_type]), :remote => true %>
+				</td>
+			</tr>
+		</table>
+		<% end %>
+	</div>
+	<div id="search_result_loading" class="j-loading-small" style="display: none"></div>
+	<h3 id="search_result_header" class="header ui-accordion-header ui-helper-reset ui-state-default ui-corner-top">
+		<span class="ui-icon ui-icon-triangle-1-s"></span>
+		<a href="#">Search Results</a>
+	</h3>
+	<div id="search_result_panel" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: block; overflow-x: auto; overflow-y: auto; padding-top: 11px; padding-bottom: 11px;">
+	</div>
+</div>
+
+<script>
+$(document).ready(function(){	
+	$('#person_search input[value="Search"]').click(function() {
+		$('#search_show_all').remove();
+		
+		if (!$('#degree_program_autocomplete').val()) {
+			$('#search_degree_program_id_equals').val(null);
+		}
+	});
+	
+	$('#person_search').bind('ajax:beforeSend', function()  { $('#search_result_header').hide(); $('#search_result_panel').hide(); $('#search_result_loading').show(); });
+	$('#person_search').bind('ajax:complete', function() { $('#search_result_loading').hide(); });
+});
+</script>

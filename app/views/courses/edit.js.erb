@@ -1,0 +1,9 @@
+if ($('#main_record_panel').length) {
+	$('#search_result_header').hide();
+	$('#search_result_panel').hide();
+	$('#main_record_panel').show();
+} else {
+	$("#j-center").html("<%= escape_javascript( render(:partial => "form") ) %>");
+}
+
+$(window).resize();

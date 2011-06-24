@@ -1,0 +1,32 @@
+<h1>Editing course_taken</h1>
+
+<%= form_for(@course_taken) do |f| %>
+	<%= render "shared/error_messages", :target => @course_taken %>
+
+  <p>
+    <%= f.label :person_id %><br />
+    <%= f.text_field :person_id %>
+  </p>
+  <p>
+    <%= f.label :course_offering_id %><br />
+    <%= f.text_field :course_offering_id %>
+  </p>
+  <p>
+    <%= f.label :course_taken_status_id %><br />
+    <%= f.text_field :course_taken_status_id %>
+  </p>
+  <p>
+    <%= f.label :grade_type_id %><br />
+    <%= f.text_field :grade_type_id %>
+  </p>
+  <p>
+    <%= f.label :evaluation %><br />
+    <%= f.text_area :evaluation %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @course_taken %> |
+<%= link_to 'Back', course_takens_path %>

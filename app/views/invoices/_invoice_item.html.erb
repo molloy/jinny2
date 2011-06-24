@@ -1,0 +1,25 @@
+<tr class="invoice_item">
+<%= ii.fields_for :invoice_items, invoice_item do |f| %>
+	<td>
+    	<%= f.text_field :name, :size => 20 %>
+	</td>
+	<td>
+		<%= f.text_field :description, :size => 20 %>
+	</td>
+	<td>
+		<%= f.text_field :unit_price, :size => 8 %>
+	</td>
+	<td>
+		<%= f.text_field :quantity, :size => 3 %>
+	</td>
+	<td>
+		<%= f.text_field :discount, :size => 8 %>
+	</td>
+	<td>
+		<%= f.text_field :total, :size => 8 %>
+	</td>
+	<td>
+		<%= link_to_function "remove", "$(this).up('.invoice_item').remove()" %>
+	</td>
+<% end %>
+</tr>
