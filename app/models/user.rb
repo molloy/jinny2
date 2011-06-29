@@ -4,4 +4,8 @@ class User < ActiveRecord::Base
   
   acts_as_authentic do |c|
   end
+  
+  def full_name
+    self.given_name << ' ' << self.surname
+  end
 end

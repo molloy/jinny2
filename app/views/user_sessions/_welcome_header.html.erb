@@ -1,6 +1,6 @@
 <a href="#">
 <% if current_user || current_user_session %>
-	Welcome <%= current_user.person.id %>
+	Welcome <%= current_user.full_name %>
 <% else %>
 	Welcome
 <% end %>
