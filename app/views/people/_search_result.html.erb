@@ -2,8 +2,8 @@
 	<table class="search_result">
 	  <tr>
 	    <th>Type</th>
-	    <th>First</th>
-	    <th>Last</th>
+	    <th><%= sort_link @search, :given_name, "First", :remote => true %></th>
+	    <th><%= sort_link @search, :surname, "Last", :remote => true %></th>
 	    <th>SSN</th>
 		<th>Degree Program</th>
 		<th>Address</th>

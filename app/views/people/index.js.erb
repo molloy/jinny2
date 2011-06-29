@@ -1,6 +1,4 @@
-if (!$('#search_people_panel').length) {
-	$('#j-center').html('<%= escape_javascript( render(:partial => "index") ) %>');
-}
+$('#j-center').html('<%= escape_javascript( render(:partial => "index") ) %>');
 $('#search_people_panel').show();
 
 // show search results

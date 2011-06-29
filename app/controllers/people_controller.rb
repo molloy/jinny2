@@ -6,9 +6,11 @@ class PeopleController < ApplicationController
 
   def load_search_params
     @search = search_by_meta :person
-    if params[:person_type].nil?
-      params[:person_type] = PersonType.student.id
-    end
+    logger.debug params[:person_type]
+    logger.debug params[:person_type].blank?
+    # if params[:person_type].blank?
+    #   params[:person_type] = PersonType.student.id
+    # end
   end
 
   # GET /people
@@ -18,7 +20,8 @@ class PeopleController < ApplicationController
       @search = Person.search(params[:search])
       @people = nil
     else
-      @people = @search.all unless @search.nil?
+      @search.meta_sort = "surname.asc" if @search.meta_sort.nil?
+      @people = @search.all
     end
     
     # if is_student
