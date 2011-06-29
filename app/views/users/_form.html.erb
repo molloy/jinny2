@@ -1,0 +1,45 @@
+<div id="user_panel" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+		<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#tabs-1">User</a></li>
+	</ul>
+	<%= semantic_form_for @user, :remote => true do |user_f| %>
+		<div id="tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+			<%= user_f.inputs do %>
+				<%= user_f.input :person_type, :label => 'User Type', :required => true %>
+				<%= user_f.input :given_name, :label => 'First Name' %>
+				<%= user_f.input :surname, :label => 'Last Name' %>
+				<%= user_f.input :email, :required => true %>
+				<%= user_f.input :password, :required => true %>
+				<%= user_f.input :password_confirmation, :required => true %>
+			<% end %>
+			
+			<%= user_f.buttons :class=>'buttons left_aligned_buttons' do %>
+				<%= user_f.commit_button :label => 'Submit' %>
+				<%= user_back_button %>
+			<% end %>
+		</div>
+	<% end %>
+</div>
+
+<script>
+$(document).ready(function(){
+	$('#user_panel').tabs({selected: 0});
+
+	// $('#nested-models fieldset:first label').css({ 'display': 'block' });
+	// $('#nested-models fieldset:first input').css({ 'display': 'block', 'clear': 'both'});
+	// $('#nested-models fieldset:first select').css({ 'display': 'block', 'clear': 'both'});
+	
+	$('.formtastic.user').live('ajax:beforeSend', function()  { $('#user_panel').hide(); $('#j-loading').show(); });
+	$('.formtastic.user').live('ajax:complete', function() { $('#j-loading').hide(); });
+	$('.formtastic.user').live('ajax:error', function() { $('#j-loading').hide(); });
+
+	// user back button
+    $(document).ready(function() {
+    	$('.user_back_button').click(function() {
+    		$('#user_panel').hide();
+    		$('#j-loading').show();
+    		$.get('<%= users_path(:search => params[:search], :user_type => params[:user_type]).gsub(/\?search/, ".js?search") %>', function() { $('#j-loading').hide(); });
+      });
+    });
+});
+</script>

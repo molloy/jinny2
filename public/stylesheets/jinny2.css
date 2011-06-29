@@ -180,3 +180,18 @@ table.search_result tr > th {
 table.search_result tr > td {
 	padding-right: 5px;
 }
+
+.j-loading-small {
+	background-image: url('/images/j-loader.gif');
+	height: 32px;
+	width: 32px;
+}
+
+#j-loading {
+	background-image: url('/images/j-loader.gif');
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;	
+	height: 32px;
+	width: 32px;
+}

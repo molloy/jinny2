@@ -6,11 +6,6 @@ class PeopleController < ApplicationController
 
   def load_search_params
     @search = search_by_meta :person
-    logger.debug params[:person_type]
-    logger.debug params[:person_type].blank?
-    # if params[:person_type].blank?
-    #   params[:person_type] = PersonType.student.id
-    # end
   end
 
   # GET /people

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110621171103) do
+ActiveRecord::Schema.define(:version => 20110629051921) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -109,20 +109,20 @@ ActiveRecord::Schema.define(:version => 20110621171103) do
   end
 
   create_table "invoice_items", :force => true do |t|
-    t.integer  "invoice_id",                                                 :null => false
-    t.string   "name",                                       :default => "", :null => false
+    t.integer  "invoice_id",                                 :null => false
+    t.string   "name",                                       :null => false
     t.string   "description"
-    t.decimal  "unit_price",  :precision => 10, :scale => 0,                 :null => false
-    t.integer  "quantity",                                                   :null => false
+    t.decimal  "unit_price",  :precision => 10, :scale => 0, :null => false
+    t.integer  "quantity",                                   :null => false
     t.decimal  "discount",    :precision => 10, :scale => 0
-    t.decimal  "total",       :precision => 10, :scale => 0,                 :null => false
+    t.decimal  "total",       :precision => 10, :scale => 0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "invoices", :force => true do |t|
-    t.string   "invoice_number",                                      :default => "", :null => false
-    t.integer  "bill_to",                                                             :null => false
+    t.string   "invoice_number",                                      :null => false
+    t.integer  "bill_to",                                             :null => false
     t.string   "bill_to_address_1"
     t.string   "bill_to_address_2"
     t.string   "bill_to_address_3"
@@ -179,6 +179,8 @@ ActiveRecord::Schema.define(:version => 20110621171103) do
     t.boolean  "distance_learning"
   end
 
+  add_index "people", ["email"], :name => "index_people_on_email"
+
   create_table "person_types", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -207,18 +209,21 @@ ActiveRecord::Schema.define(:version => 20110621171103) do
   end
 
   create_table "users", :force => true do |t|
-    t.integer  "person_id",                          :null => false
-    t.string   "email",              :default => "", :null => false
-    t.string   "crypted_password",   :default => "", :null => false
-    t.string   "password_salt",      :default => "", :null => false
-    t.string   "persistence_token",  :default => "", :null => false
-    t.integer  "login_count",        :default => 0,  :null => false
-    t.integer  "failed_login_count", :default => 0,  :null => false
+    t.integer  "person_id"
+    t.string   "email",                             :null => false
+    t.string   "crypted_password",                  :null => false
+    t.string   "password_salt",                     :null => false
+    t.string   "persistence_token",                 :null => false
+    t.integer  "login_count",        :default => 0, :null => false
+    t.integer  "failed_login_count", :default => 0, :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.string   "current_login_ip"
     t.datetime "last_login_at"
     t.string   "last_login_ip"
+    t.string   "given_name"
+    t.string   "surname"
+    t.integer  "person_type_id"
   end
 
 end

@@ -3,6 +3,8 @@ ActionController::Routing::Routes.draw do |map|
   
   resource :user_session
   
+  resources :users
+
   resources :departments
 
   resources :invoice_items
