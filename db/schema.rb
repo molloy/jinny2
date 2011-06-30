@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110629051921) do
+ActiveRecord::Schema.define(:version => 20110629072825) do
 
   create_table "address_types", :force => true do |t|
     t.string   "name"
@@ -223,7 +223,7 @@ ActiveRecord::Schema.define(:version => 20110629051921) do
     t.string   "last_login_ip"
     t.string   "given_name"
     t.string   "surname"
-    t.integer  "person_type_id"
+    t.integer  "person_type_id",     :default => 0, :null => false
   end
 
 end

@@ -110,7 +110,7 @@ $(document).ready(function(){
     	$('.person_back_button').click(function() {
     		$('#person_panel').hide();
     		$('#j-loading').show();
-    		$.get('<%= people_path(:search => params[:search], :person_type => params[:person_type]).gsub(/\?search/, ".js?search") %>', function() { $('#j-loading').hide(); });
+    		$.getScript('<%= people_path(:search => params[:search], :person_type => params[:person_type]).gsub(/\?search/, ".js?search") %>', function() { $('#j-loading').hide(); });
       });
     });
 });

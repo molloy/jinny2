@@ -38,7 +38,7 @@ $(document).ready(function(){
     	$('.user_back_button').click(function() {
     		$('#user_panel').hide();
     		$('#j-loading').show();
-    		$.get('<%= users_path(:search => params[:search], :user_type => params[:user_type]).gsub(/\?search/, ".js?search") %>', function() { $('#j-loading').hide(); });
+    		$.getScript('<%= users_path(:search => params[:search], :user_type => params[:user_type]).gsub(/\?search/, ".js?search") %>', function() { $('#j-loading').hide(); });
       });
     });
 });

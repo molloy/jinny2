@@ -53,13 +53,6 @@
 					</div>
 					<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">
 						<span class="ui-icon ui-icon-triangle-1-e"></span>
-						<a href="#">School</a>
-					</h3>
-					<div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="overflow-x: auto; overflow-y: auto; display: none; height: 222px; padding-top: 11px; padding-bottom: 11px; " role="tabpanel">
-						<p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
-					</div>
-					<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">
-						<span class="ui-icon ui-icon-triangle-1-e"></span>
 						<a href="#">Administration</a>
 					</h3>
 					<div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="overflow-x: auto; overflow-y: auto; display: none; height: 222px; padding-top: 11px; padding-bottom: 11px; " role="tabpanel">
@@ -67,7 +60,18 @@
 						<%= link_to "Faculty", people_path(:person_type => PersonType.faculty.id), :remote => true, :class => 'nav-link' %><br/>
 						<%= link_to "Administrators", people_path(:person_type => PersonType.administrator.id), :remote => true, :class => 'nav-link' %><br/>
 						<%= link_to "Courses", courses_path, :remote => true, :class => 'nav-link' %><br/>
-						<%= link_to "Course Offerings", course_offerings_path, :remote => true, :class => 'nav-link' %>
+						<%= link_to "Course Offerings", course_offerings_path, :remote => true, :class => 'nav-link' %><br/>
+						<%= link_to "Users", users_path, :remote => true, :class => 'nav-link' %>
+					</div>
+					<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">
+						<span class="ui-icon ui-icon-triangle-1-e"></span>
+						<a href="#">Reports</a>
+					</h3>
+					<div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="overflow-x: auto; overflow-y: auto; display: none; height: 222px; padding-top: 11px; padding-bottom: 11px; " role="tabpanel">
+						<%= link_to "Courses by Instructor", people_path(:person_type => PersonType.student.id), :remote => true, :class => 'nav-link' %><br/>
+						<%= link_to "Instructor by Course", people_path(:person_type => PersonType.student.id), :remote => true, :class => 'nav-link' %><br/>
+						<%= link_to "All Enrollments by Course", people_path(:person_type => PersonType.student.id), :remote => true, :class => 'nav-link' %><br/>
+						<%= link_to "All Students by Degree", people_path(:person_type => PersonType.student.id), :remote => true, :class => 'nav-link' %><br/>
 					</div>
 				</div>
 			</div>

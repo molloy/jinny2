@@ -49,5 +49,21 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       flash[:notice] = 'User was successfully updated.'
     end
+
+    @search = User.search(params[:search])
+  end
+
+  # DELETE /users/1
+  # DELETE /users/1.xml
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+
+    respond_to do |format|
+      format.html { redirect_to(users_url) }
+      format.xml  { head :ok }
+    end
+
+    @search = User.search(params[:search])
   end
 end

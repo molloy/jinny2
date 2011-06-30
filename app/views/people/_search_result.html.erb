@@ -1,35 +1,33 @@
 <% unless @people == nil %>
 	<table class="search_result">
 	  <tr>
-	    <th>Type</th>
-	    <th><%= sort_link @search, :given_name, "First", :remote => true %></th>
-	    <th><%= sort_link @search, :surname, "Last", :remote => true %></th>
+	    <th><%= sort_link @search, :given_name, "First", :person_type => params[:person_type] %></th>
+	    <th><%= sort_link @search, :surname, "Last", :person_type => params[:person_type] %></th>
 	    <th>SSN</th>
 		<th>Degree Program</th>
 		<th>Address</th>
 		<th>Phone</th>
-		<th>Distance Learning</th>
+		<th>Distance</th>
 	  </tr>
 	
 	<% @people.each do |person| %>
 	  <tr>
-	    <td><%=PersonType.find(person.person_type_id).name %></td>
-	    <td><%=h person.given_name %></td>
-	    <td><%=h person.surname %></td>
-	    <td><%=h person.ssn %></td>
-		<td><%= person.degree_program.title unless person.degree_program.nil? %>
+	    <td><%=person.given_name %></td>
+	    <td><%=person.surname %></td>
+	    <td><%=person.ssn %></td>
+		<td><%=person.degree_program.title unless person.degree_program.nil? %>
 		<td>
 			<% person.addresses.each_with_index do |addr, i| %>
 				<% if i != 0 %>
 					<br />
 				<% end %>
 	    		<%=AddressType.find(addr.address_type_id).name %>:
-				<%=h addr.address_1 %>
-				<%=h addr.address_2 %>
-				<%=h addr.address_3 %>
-				<%=h addr.city %>
-				<%=h addr.province %>
-				<%=h addr.postal_code %>
+				<%=addr.address_1 %>
+				<%=addr.address_2 %>
+				<%=addr.address_3 %>
+				<%=addr.city %>
+				<%=addr.province %>
+				<%=addr.postal_code %>
 			<% end %>
 		</td>
 		<td>
@@ -38,18 +36,25 @@
 					<br />
 				<% end %>
 				<%= PhoneType.find(ph.phone_type_id).name %>:
-				<%=h ph.phone_number %>
+				<%=ph.phone_number %>
 			<% end %>
 		</td>
-		<td><%=h person.distance_learning%></td>
+		<td><%=person.distance_learning%></td>
 	    <td><%= link_to 'Edit', edit_person_path(person, :search => params[:search], :person_type => params[:person_type]), :remote => true %></td>
 		<td><%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete, :remote => true %></td>
 	  </tr>
 	<% end %>
 	</table>
+
 	<script>
 	$(document).ready(function(){
-		$('.search_result a').live('ajax:complete', hideCenterPanelLoading).click(showCenterPanelLoading);
+		$('a.sort_link').click(function () {
+    	  $('#search_result_header').hide(); $('#search_result_panel').hide(); $('#search_result_loading').show();
+			$.getScript(this.href, function() {
+				$('#search_result_loading').hide();
+			});
+			return false;
+		});
 	});
 	</script>
 <% end %>

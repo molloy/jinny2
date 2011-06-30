@@ -2,8 +2,8 @@
 	<table class="search_result">
 	  <tr>
 	    <th>Email</th>
-	    <th><%= sort_link @search, :given_name, "First", :remote => true %></th>
-	    <th><%= sort_link @search, :surname, "Last", :remote => true %></th>
+	    <th><%= sort_link @search, :given_name, "First" %></th>
+	    <th><%= sort_link @search, :surname, "Last" %></th>
 	  </tr>
 	
 	<% @users.each do |user| %>
@@ -18,7 +18,10 @@
 	</table>
 	<script>
 	$(document).ready(function(){
-		$('.search_result a').live('ajax:complete', hideCenterPanelLoading).click(showCenterPanelLoading);
+		$('a.sort_link').live('click', function () {
+			$.getScript(this.href);
+			return false;
+		});
 	});
 	</script>
 <% end %>

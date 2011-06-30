@@ -24,8 +24,9 @@
 			<tr>
 				<td colspan="2">
 					<%= f.submit "Search" %>&nbsp;
-					<%= search_user_show_all_button %>
-					<%= link_to "New", new_user_path, :remote => true %>
+					<%= search_user_show_all_button %>&nbsp;
+					<%= user_new_button %>
+					<!-- <%= link_to "New", new_user_path, :remote => true %> -->
 				</td>
 			</tr>
 		</table>
@@ -42,7 +43,7 @@
 
 <script>
 $(document).ready(function(){	
-	$('#person_search input[value="Search"]').click(function() {
+	$('#user_search input[value="Search"]').click(function() {
 		$('#search_show_all').remove();
 		
 		if (!$('#degree_program_autocomplete').val()) {
@@ -50,7 +51,17 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('#person_search').bind('ajax:beforeSend', function()  { $('#search_result_header').hide(); $('#search_result_panel').hide(); $('#search_result_loading').show(); });
-	$('#person_search').bind('ajax:complete', function() { $('#search_result_loading').hide(); });
+	$('#user_search').bind('ajax:beforeSend', function()  { $('#search_result_header').hide(); $('#search_result_panel').hide(); $('#search_result_loading').show(); });
+	$('#user_search').bind('ajax:complete', function() { $('#search_result_loading').hide(); });
+
+	// user new button
+    $(document).ready(function() {
+    	$('.user_new_button').click(function() {
+    		$('#user_panel').hide();
+    		$('#j-loading').show();
+    		$.getScript('<%= new_user_path(:search => params[:search]).gsub(/\?search/, ".js?search") %>', function() { $('#j-loading').hide(); });
+      });
+    });
+
 });
 </script>

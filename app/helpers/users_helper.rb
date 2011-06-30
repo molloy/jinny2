@@ -24,4 +24,9 @@ module UsersHelper
 
     raw(inputHTML);
   end
+
+  def user_new_button
+    inputHTML = tag('input', { :class => 'user_new_button', :type => 'button', :value => 'New' })
+    raw(inputHTML);
+  end
 end
