@@ -16,7 +16,7 @@ class PeopleController < ApplicationController
       @people = nil
     else
       @search.meta_sort = "surname.asc" if @search.meta_sort.nil?
-      @people = @search.all
+      @people = @search.paginate(:page => params[:page])
     end
     
     # if is_student
@@ -72,7 +72,7 @@ class PeopleController < ApplicationController
 
     if @person.update_attributes(params[:person])
       flash[:notice] = 'Course was successfully updated.'
-      @people = @search.all unless @search.nil?
+      @people = @search.paginate(:page => params[:page]) unless @search.nil?
     end
   end
 

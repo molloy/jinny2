@@ -45,11 +45,20 @@
 	  </tr>
 	<% end %>
 	</table>
+	<%= will_paginate @people %>
 
 	<script>
 	$(document).ready(function(){
 		$('a.sort_link').click(function () {
     	  $('#search_result_header').hide(); $('#search_result_panel').hide(); $('#search_result_loading').show();
+			$.getScript(this.href, function() {
+				$('#search_result_loading').hide();
+			});
+			return false;
+		});
+
+		$('.pagination a').click(function () {
+			$('#search_result_header').hide(); $('#search_result_panel').hide(); $('#search_result_loading').show();
 			$.getScript(this.href, function() {
 				$('#search_result_loading').hide();
 			});

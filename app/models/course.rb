@@ -18,4 +18,7 @@ class Course < ActiveRecord::Base
   
   def department_autocomplete=(val)
   end
+
+  cattr_reader :per_page
+  @@per_page = 10
 end

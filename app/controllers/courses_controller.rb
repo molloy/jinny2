@@ -15,7 +15,7 @@ class CoursesController < ApplicationController
       @search = Course.search(params[:search])
       @courses = nil
     else
-      @courses = @search.all unless @search.nil?
+      @courses = @search.paginate(:page => params[:page]) unless @search.nil?
     end
   end
   
@@ -69,7 +69,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
     if @course.update_attributes(params[:course])
       flash[:notice] = 'Course was successfully updated.'
-      @courses = @search.all unless @search.nil?
+      @courses = @search.paginate(:page => params[:page]) unless @search.nil?
     end
   end
   
@@ -82,18 +82,6 @@ class CoursesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(courses_url) }
       format.xml  { head :ok }
-    end
-  end
-  
-  def search
-    if params[:show_all]
-      @courses = Course.all
-    else
-      search_condition_params = search_condition_parameters
-      search_conditions = search_condition_params[0]
-      unless search_conditions.blank?
-        @courses = Course.where(search_condition_params).all
-      end
     end
   end
 end
