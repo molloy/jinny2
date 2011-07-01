@@ -5,9 +5,10 @@
 	</h3>
 	<div id="search_for_panel" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: block; overflow-x: auto; overflow-y: auto; padding-top: 11px; padding-bottom: 11px;">
 		<%= form_for @search, people_path, :method => :get, :remote => true do |f| %>
-		<%= f.hidden_field :degree_program_id_equals %>
 		<%= hidden_field_tag :person_type, params[:person_type] %>
 		<%= f.hidden_field :person_type_id_equals, :value => params[:person_type] %>
+		<%= f.hidden_field :degree_program_id_equals %>
+		<%= f.hidden_field :course_taught %>
 		<table>
 			<tr>
 				<td><%= f.label :given_name_contains, "First Name contains" %></td>
@@ -25,18 +26,26 @@
 				<td><%= f.label :ssn_contains, "SSN contains" %></td>
 				<td><%= f.text_field :ssn_contains %></td>
 			</tr>
+			<% if is_student_screen %>
 			<tr>
 				<td><%= f.label :degree_program_id_equals, "Degree program is" %></td>
 			    <td><%= autocomplete_field_tag 'degree_program_autocomplete', (Major.find(f.object.degree_program_id_equals).name unless f.object.degree_program_id_equals.nil?), autocomplete_degree_program_title_people_path, :id_element => '#search_degree_program_id_equals' %></td>
 			</tr>
+			<% end %>
+			<% if is_faculty_screen %>
+			<tr>
+				<td><%= f.label :course_taught, "Course Taught" %></td>
+			    <td><%= autocomplete_field_tag 'course_taught_autocomplete', (Course.find(f.object.course_taught).name unless f.object.course_taught.nil?), autocomplete_course_number_and_name_course_offerings_path, :id_element => '#search_course_taught' %></td>
+			</tr>
+			<% end %>
 			<tr>
 				<td colspan="2">&nbsp;</td>
 			</tr>
 			<tr>
 				<td colspan="2">
 					<%= f.submit "Search" %>&nbsp;
-					<%= search_person_show_all_button %>
-					<%= link_to "New", new_person_path(:person_type => params[:person_type]), :remote => true %>
+					<%= search_person_show_all_button %>&nbsp;
+					<%= person_new_button %>
 				</td>
 			</tr>
 		</table>
@@ -63,5 +72,14 @@ $(document).ready(function(){
 	
 	$('#person_search').bind('ajax:beforeSend', function()  { $('#search_result_header').hide(); $('#search_result_panel').hide(); $('#search_result_loading').show(); });
 	$('#person_search').bind('ajax:complete', function() { $('#search_result_loading').hide(); });
+
+	// people new button
+    $(document).ready(function() {
+    	$('.person_new_button').click(function() {
+    		$('#person_panel').hide();
+    		$('#j-loading').show();
+    		$.getScript('<%= new_person_path(:search => params[:search], :person_type => params[:person_type]).gsub(/\?search/, ".js?search") %>', function() { $('#j-loading').hide(); });
+      });
+    });
 });
 </script>

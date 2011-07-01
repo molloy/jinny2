@@ -58,4 +58,11 @@ class CourseTaken < ActiveRecord::Base
 
   def term_type=(val)
   end
+
+  def instructor_person
+    course_offering.instructor_person.full_name unless (course_offering.instructor_person.nil?)
+  end
+
+  def instructor_person=(val)
+  end
 end

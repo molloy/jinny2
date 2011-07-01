@@ -11,6 +11,7 @@ gem 'formtastic', '1.2.3'
 gem 'paperclip', '2.3.8'
 gem 'rails3-jquery-autocomplete', '0.6.2'
 gem 'meta_search', '1.0.3'
+gem 'squeel', '0.8.4'
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'remotipart', '0.2.1', :git => 'git://github.com/JangoSteve/remotipart.git', :branch => 'latest-and-greatest'
 

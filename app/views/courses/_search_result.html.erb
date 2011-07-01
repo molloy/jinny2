@@ -1,10 +1,10 @@
 <% unless @courses.nil? %>
 	<table class="search_result">
 	  <tr>
-	    <th>Course #</th>
-	    <th>Course Name</th>
+	    <th><%= sort_link @search, :course_number, "Course #" %></th>
+	    <th><%= sort_link @search, :name, "Course Name" %></th>
 		<th>Units</th>
-	    <th>Department</th>
+	    <th><%= sort_link @search, :department_name, "Department" %></th>
 	  </tr>
 	
 	<% @courses.each do |course| %>
@@ -24,7 +24,7 @@
 	$(document).ready(function(){
 		$('.search_result a').live('ajax:complete', hideCenterPanelLoading).click(showCenterPanelLoading);
 
-		$('.pagination a').click(function () {
+		$('a.sort_link, .pagination a').click(function () {
 			$('#search_result_header').hide(); $('#search_result_panel').hide(); $('#search_result_loading').show();
 			$.getScript(this.href, function() {
 				$('#search_result_loading').hide();

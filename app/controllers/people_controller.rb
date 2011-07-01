@@ -4,6 +4,8 @@ class PeopleController < ApplicationController
   autocomplete :degree_program_title, { :degree_program => [:title] }, :display_value => :title, :full => true
   autocomplete :department_name, { :department => [:name] }, :display_value => :name, :full => true
 
+  helper_method :is_student_screen, :is_faculty_screen, :is_administrator_screen
+
   def load_search_params
     @search = search_by_meta :person
   end
@@ -159,4 +161,16 @@ class PeopleController < ApplicationController
     end
   end
 
+private
+  def is_student_screen
+    params[:person_type] == PersonType.student.id.to_s
+  end
+
+  def is_faculty_screen
+    params[:person_type] == PersonType.faculty.id.to_s
+  end
+
+  def is_administrator_screen
+    params[:person_type] == PersonType.administrator.id.to_s
+  end
 end

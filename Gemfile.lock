@@ -83,6 +83,9 @@ GEM
       rake (>= 0.8.7)
       thor (~> 0.14.4)
     rake (0.8.7)
+    squeel (0.8.4)
+      activerecord (~> 3.0)
+      activesupport (~> 3.0)
     thor (0.14.6)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
@@ -101,4 +104,5 @@ DEPENDENCIES
   rails (= 3.0.5)
   rails3-jquery-autocomplete (= 0.6.2)
   remotipart (= 0.2.1)!
+  squeel (= 0.8.4)
   will_paginate (~> 3.0.pre2)

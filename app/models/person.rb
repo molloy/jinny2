@@ -11,6 +11,9 @@ class Person < ActiveRecord::Base
   accepts_nested_attributes_for :addresses, :phones, :course_takens, :allow_destroy => true
   
   validates_presence_of :person_type_id, :given_name, :surname
+  
+  scope :course_taught, lambda {|the_course_id| where{id.in(CourseOffering.where{course_id.eq the_course_id}.select{instructor})}}
+  search_methods :course_taught
 
   def self.find_all_faculty
     find_all_by_person_type_id(PersonType.faculty, :order => 'surname, given_name')

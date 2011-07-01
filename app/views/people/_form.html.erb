@@ -63,6 +63,9 @@
 						<li class="string optional term">
 							<span>Term</span>
 						</li>
+						<!-- <li class="string optional instructor">
+							<span>Instructor</span>
+						</li> -->
 						<li class="string optional status">
 							<span>Status</span>
 						</li>
@@ -76,6 +79,7 @@
 						<%= course_taken_f.input :course, :input_html => { :class => 'course', :disabled => true } %>
 						<%= course_taken_f.input :year, :input_html => { :disabled => true } %>
 						<%= course_taken_f.input :term_type, :input_html => { :disabled => true }, :label => 'Term' %>
+						<!-- <%= course_taken_f.input :instructor_person, :input_html => { :disabled => true }, :label => 'Instructor' %> -->
 						<%= course_taken_f.input :course_taken_status, :label => 'Status', :required => true %>
 						<%= course_taken_f.input :grade_type, :required => true, :label => 'Grade' %>
 						<%= delete_course_taken_button %>

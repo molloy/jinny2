@@ -76,4 +76,9 @@ module PeopleHelper
 
     raw(inputHTML);
   end
+
+  def person_new_button
+    inputHTML = tag('input', { :class => 'person_new_button', :type => 'button', :value => 'New' })
+    raw(inputHTML);
+  end
 end
