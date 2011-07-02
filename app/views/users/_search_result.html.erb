@@ -19,7 +19,7 @@
 
 			<% @users.each do |user| %>
 				<tr>
-					<td><%= user.person_type.name %></td>
+					<td><%= user.person_type.name unless user.person_type.nil? %></td>
 					<td><%= user.email %></td>
 					<td><%= user.given_name %></td>
 					<td><%= user.surname %></td>
