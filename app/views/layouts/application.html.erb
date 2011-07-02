@@ -58,7 +58,6 @@
 					<div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="overflow-x: auto; overflow-y: auto; display: none; height: 222px; padding-top: 11px; padding-bottom: 11px; " role="tabpanel">
 						<%= link_to "Students", people_path(:person_type => PersonType.student.id), :remote => true, :class => 'nav-link' %><br/>
 						<%= link_to "Faculty", people_path(:person_type => PersonType.faculty.id), :remote => true, :class => 'nav-link' %><br/>
-						<%= link_to "Administrators", people_path(:person_type => PersonType.administrator.id), :remote => true, :class => 'nav-link' %><br/>
 						<%= link_to "Courses", courses_path, :remote => true, :class => 'nav-link' %><br/>
 						<%= link_to "Course Offerings", course_offerings_path, :remote => true, :class => 'nav-link' %><br/>
 						<%= link_to "Users", users_path, :remote => true, :class => 'nav-link' %>
@@ -81,6 +80,9 @@
             <div id="j-center">
 				<%= yield %>
             </div>
+			<div id="j-search-results">
+			</div>
+			
 			<% else %>
 				<div id="j-loading" style="display: none;">
 				</div>

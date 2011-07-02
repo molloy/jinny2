@@ -1,15 +1,12 @@
-if (!$('#search_courses_panel').length) {
-	$('#j-center').html('<%= escape_javascript( render(:partial => "index") ) %>');
-}
-$('#search_courses_panel').show();
+$('#j-center').empty();
+$('#j-search-results').empty();
+
+$('#j-center').html('<%= escape_javascript( render(:partial => "index") ) %>');
+$('#search_course_panel').show();
 
 // show search results
-$('#search_result_panel').html('<%= escape_javascript( render(:partial => "search_result") ) %>');
+$('#j-search-results').html('<%= escape_javascript( render(:partial => "search_result") ) %>');
 
 $('#search_result_header').toggle($('#search_result_panel').children().length > 0);
 $('#search_result_panel').toggle($('#search_result_panel').children().length > 0);
 $('#j-loading').hide();
-
-$('#course_panel').toggle();
-
-$(window).resize();

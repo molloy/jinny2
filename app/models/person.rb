@@ -2,13 +2,15 @@ class Person < ActiveRecord::Base
   has_many :addresses, :dependent => :destroy
   has_many :phones, :dependent => :destroy
   has_many :course_takens, :dependent => :destroy
+  # has_many :course_offerings, :class_name => "CourseOffering", :finder_sql => 'SELECT co.*  FROM course_offerings WHERE co.instructor = #{id}'
+  has_many :course_offerings, :foreign_key => "instructor"
   
   has_one :user, :dependent => :destroy
   
   belongs_to :degree_program
   belongs_to :department
 
-  accepts_nested_attributes_for :addresses, :phones, :course_takens, :allow_destroy => true
+  accepts_nested_attributes_for :addresses, :phones, :course_takens, :course_offerings, :allow_destroy => true
   
   validates_presence_of :person_type_id, :given_name, :surname
   

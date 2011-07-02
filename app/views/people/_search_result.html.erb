@@ -1,71 +1,62 @@
-<% unless @people == nil %>
-	<table class="search_result">
-	  <tr>
-	    <th><%= sort_link @search, :given_name, "First", :person_type => params[:person_type] %></th>
-	    <th><%= sort_link @search, :surname, "Last", :person_type => params[:person_type] %></th>
-	    <th>SSN</th>
-		<th>Degree Program</th>
-		<th>Address</th>
-		<th>Phone</th>
-		<th>Distance</th>
-	  </tr>
+<div id="search_result_container_panel" class="ui-accordion ui-widget ui-helper-reset ui-accordion-icons">
+	<div id="search_result_loading" class="j-loading-small" style="display: none"></div>
+	<h3 id="search_result_header" class="header ui-accordion-header ui-helper-reset ui-state-default ui-corner-top">
+		<span class="ui-icon ui-icon-triangle-1-s"></span>
+		<a href="#">Search Results</a>
+	</h3>
+	<div id="search_result_panel" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: block; overflow-x: auto; overflow-y: auto; padding-top: 11px; padding-bottom: 11px;">
+		<% unless @people == nil %>
+
+			<%= will_paginate @people %>
+
+			<table class="search_result">
+			  <tr>
+			    <th><%= sort_link @search, :given_name, "First", :person_type => params[:person_type] %></th>
+			    <th><%= sort_link @search, :surname, "Last", :person_type => params[:person_type] %></th>
+			    <th>SSN</th>
+				<th>Degree Program</th>
+				<th>Address</th>
+				<th>Phone</th>
+				<th>Distance</th>
+			  </tr>
 	
-	<% @people.each do |person| %>
-	  <tr>
-	    <td><%=person.given_name %></td>
-	    <td><%=person.surname %></td>
-	    <td><%=person.ssn %></td>
-		<td><%=person.degree_program.title unless person.degree_program.nil? %>
-		<td>
-			<% person.addresses.each_with_index do |addr, i| %>
-				<% if i != 0 %>
-					<br />
-				<% end %>
-	    		<%=AddressType.find(addr.address_type_id).name %>:
-				<%=addr.address_1 %>
-				<%=addr.address_2 %>
-				<%=addr.address_3 %>
-				<%=addr.city %>
-				<%=addr.province %>
-				<%=addr.postal_code %>
+			<% @people.each do |person| %>
+			  <tr>
+			    <td><%=person.given_name %></td>
+			    <td><%=person.surname %></td>
+			    <td><%=person.ssn %></td>
+				<td><%=person.degree_program.title unless person.degree_program.nil? %>
+				<td>
+					<% person.addresses.each_with_index do |addr, i| %>
+						<% if i != 0 %>
+							<br />
+						<% end %>
+			    		<%=AddressType.find(addr.address_type_id).name %>:
+						<%=addr.address_1 %>
+						<%=addr.address_2 %>
+						<%=addr.address_3 %>
+						<%=addr.city %>
+						<%=addr.province %>
+						<%=addr.postal_code %>
+					<% end %>
+				</td>
+				<td>
+					<% person.phones.each_with_index do |ph, i| %>
+						<% if i != 0 %>
+							<br />
+						<% end %>
+						<%= PhoneType.find(ph.phone_type_id).name %>:
+						<%=ph.phone_number %>
+					<% end %>
+				</td>
+				<td><%=person.distance_learning%></td>
+			    <td><%= link_to 'Edit', edit_person_path(person, :search => params[:search], :person_type => params[:person_type]), :remote => true %></td>
+				<td><%= link_to 'Destroy', person_path(person, :search => params[:search], :person_type => params[:person_type]), :confirm => 'Are you sure?', :method => :delete, :remote => true %></td>
+			  </tr>
 			<% end %>
-		</td>
-		<td>
-			<% person.phones.each_with_index do |ph, i| %>
-				<% if i != 0 %>
-					<br />
-				<% end %>
-				<%= PhoneType.find(ph.phone_type_id).name %>:
-				<%=ph.phone_number %>
-			<% end %>
-		</td>
-		<td><%=person.distance_learning%></td>
-	    <td><%= link_to 'Edit', edit_person_path(person, :search => params[:search], :person_type => params[:person_type]), :remote => true %></td>
-		<td><%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete, :remote => true %></td>
-	  </tr>
-	<% end %>
-	</table>
-	<%= will_paginate @people %>
-
-	<script>
-	$(document).ready(function(){
-		$('.search_result a').live('ajax:complete', hideCenterPanelLoading).click(showCenterPanelLoading);
-
-		$('a.sort_link').click(function () {
-    	  $('#search_result_header').hide(); $('#search_result_panel').hide(); $('#search_result_loading').show();
-			$.getScript(this.href, function() {
-				$('#search_result_loading').hide();
-			});
-			return false;
-		});
-
-		$('.pagination a').click(function () {
-			$('#search_result_header').hide(); $('#search_result_panel').hide(); $('#search_result_loading').show();
-			$.getScript(this.href, function() {
-				$('#search_result_loading').hide();
-			});
-			return false;
-		});
-	});
-	</script>
-<% end %>
+			</table>
+	
+			<%= will_paginate @people %>
+		<% end %>
+	</div>
+</div>

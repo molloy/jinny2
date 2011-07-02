@@ -138,7 +138,7 @@ strong{
 }
 
 #nested-models.nested-models fieldset > ol > li { padding:0.5em 0; margin-top:-0.5em; margin-bottom:1em; } /* padding and negative margin juggling is for Firefox */
-#nested-models.nested-models fieldset > ol > li { display: block; float: left; padding-right: 5px; } /* clearing contained floats */
+#nested-models.nested-models fieldset > ol > li { display: block; float: left; padding-right: 2px; } /* clearing contained floats */
 #nested-models.nested-models fieldset > ol > li.hidden { padding: 0px; } /* clearing contained floats */
 
 #nested-models.nested-models fieldset > ol > li label { display: none; }
@@ -152,6 +152,7 @@ strong{
 
 #nested-models.nested-models fieldset > ol > li[id $= "_course_input"],
 #nested-models.nested-models fieldset > ol > li[id $= "_course_autocomplete_input"],
+#nested-models.nested-models fieldset > ol > li[id $= "_course_number_and_name_input"],
 #nested-models.nested-models fieldset > ol > li.course { width: 280px; }
 #nested-models.nested-models fieldset > ol > li[id $= "_year_input"],
 #nested-models.nested-models fieldset > ol > li.year { width: 80px; }
@@ -163,9 +164,12 @@ strong{
 #nested-models.nested-models fieldset > ol > li[id $= "_grade_type_input"],
 #nested-models.nested-models fieldset > ol > li.grade { width: 70px; }
 
+#nested-models.nested-models fieldset > ol > li.string input[id $= "_course_number_and_name"],
 #nested-models.nested-models fieldset > ol > li.string input[id $= "_course_autocomplete"],
 #nested-models.nested-models fieldset > ol > li.string input[id $= "_course"] { width: 270px; }
+#nested-models.nested-models fieldset > ol > li.numeric input[id $= "_year"],
 #nested-models.nested-models fieldset > ol > li.string input[id $= "_year"] { width: 70px; }
+#nested-models.nested-models fieldset > ol > li.string select[id $= "_term_type"],
 #nested-models.nested-models fieldset > ol > li.string input[id $= "_term_type_id"],
 #nested-models.nested-models fieldset > ol > li.string input[id $= "_term_type"] { width: 70px; }
 #nested-models.nested-models fieldset > ol > li.string select[id $= "_course_taken_status_id"] { width: 90px; }
@@ -195,3 +199,10 @@ table.search_result tr > td {
 	height: 32px;
 	width: 32px;
 }
+
+#j-search-results {
+    width:958px;
+	float: left;	
+}
+
+form.formtastic fieldset.left_aligned_buttons { padding-left: 0px; }
