@@ -5,13 +5,14 @@ class CoursesController < ApplicationController
   autocomplete :person_fullname, { :person => [:given_name, :surname] }, :display_value => :full_name, :where_filter => ('person_type_id = ' + PersonType.faculty.id.to_s), :full => true
   
   def load_search_params
-    @search = search_by_meta :course
+    @search = search_by_meta :course  
   end
 
   # GET /courses
   # GET /courses.xml
   def index
     if @search.nil?
+      logger.debug 'hello'
       @search = Course.search(params[:search])
       @courses = nil
     else
@@ -71,5 +72,17 @@ class CoursesController < ApplicationController
 
     @courses = @search.paginate(:page => params[:page]) unless @search.nil?
     redirect_to(courses_path(:search => params[:search]))
+  end
+
+  def export
+    if @search.nil?
+      @search = Course.search(params[:search])
+      @courses = nil
+    else
+      @search.meta_sort = "course_number.asc" if @search.meta_sort.nil?
+      @courses = @search.all
+    end
+    
+    send_data @courses.to_xls_data, :filename => 'courses.xls'
   end
 end

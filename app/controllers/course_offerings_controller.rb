@@ -94,4 +94,16 @@ class CourseOfferingsController < ApplicationController
     @course_offerings = @search.paginate(:page => params[:page]) unless @search.nil?
     redirect_to(course_offerings_path(:search => params[:search]))
   end
+
+  def export
+    if @search.nil?
+      @search = CourseOffering.search(params[:search])
+      @course_offerings = nil
+    else
+      @search.meta_sort = "year.asc" if @search.meta_sort.nil?
+      @course_offerings = @search.all
+    end
+    
+    send_data @courses.to_xls_data, :filename => 'course_offerings.xls'
+  end
 end

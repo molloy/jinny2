@@ -7,6 +7,9 @@
 	<div id="search_result_panel" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: block; overflow-x: auto; overflow-y: auto; padding-top: 11px; padding-bottom: 11px;">
 		<% unless @people == nil %>
 
+			<%= button_to 'Export', { :action => 'export', :search => params[:search] } %>
+			<br/>
+
 			<%= will_paginate @people %>
 
 			<table class="search_result">

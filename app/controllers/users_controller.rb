@@ -69,4 +69,16 @@ class UsersController < ApplicationController
     @users = @search.paginate(:page => params[:page]) unless @search.nil?
     redirect_to(users_path(:search => params[:search]))
   end
+
+  def export
+    if @search.nil?
+      @search = User.search(params[:search])
+      @users = nil
+    else
+      @search.meta_sort = "email.asc" if @search.meta_sort.nil?
+      @users = @search.all
+    end
+    
+    send_data @courses.to_xls_data, :filename => 'users.xls'
+  end
 end

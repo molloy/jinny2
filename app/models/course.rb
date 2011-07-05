@@ -7,6 +7,10 @@ class Course < ActiveRecord::Base
   
   validates_presence_of :course_number, :name, :department, :units
   validates_numericality_of :units
+  validates_uniqueness_of :course_number
+
+  scope :taught_by, lambda {|person_id| where{id.in(CourseOffering.where{instructor.eq person_id}.select{course_id})}}
+  search_methods :taught_by
 
   def course_number_and_name
     return read_attribute(:course_number) + " - " + read_attribute(:name)

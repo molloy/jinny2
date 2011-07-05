@@ -17,6 +17,7 @@ gem 'meta_search', '1.0.3'
 gem 'squeel', '0.8.4'
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'remotipart', '0.2.1', :git => 'git://github.com/JangoSteve/remotipart.git', :branch => 'latest-and-greatest'
+gem 'to_xls'
 
 # Use unicorn as the web server
 # gem 'unicorn'

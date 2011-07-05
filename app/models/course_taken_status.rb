@@ -1,5 +1,6 @@
 class CourseTakenStatus < ActiveRecord::Base
   has_many :course_takens
+  validates_uniqueness_of :name
 
   def self.completed
     return @course_taken_status_completed if defined?(@course_taken_status_completed)

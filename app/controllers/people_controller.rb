@@ -6,6 +6,8 @@ class PeopleController < ApplicationController
 
   helper_method :is_student_screen, :is_faculty_screen, :is_administrator_screen
 
+  respond_to :xls, :only => :export
+  
   def load_search_params
     @search = search_by_meta :person
   end
@@ -90,6 +92,18 @@ class PeopleController < ApplicationController
 
     @people = @search.paginate(:page => params[:page]) unless @search.nil?
     redirect_to(people_path(:person_type => params[:person_type], :search => params[:search]))
+  end
+  
+  def export
+    if @search.nil?
+      @search = Person.search(params[:search])
+      @people = nil
+    else
+      @search.meta_sort = "surname.asc" if @search.meta_sort.nil?
+      @people = @search.all
+    end
+    
+    send_data @people.to_xls_data, :filename => 'people.xls'
   end
   
 private

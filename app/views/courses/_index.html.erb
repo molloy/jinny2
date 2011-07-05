@@ -6,6 +6,7 @@
 	<div id="search_for_panel" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: block; overflow-x: auto; overflow-y: auto; padding-top: 11px; padding-bottom: 11px;">
 		<%= form_for @search, courses_path, :method => :get, :remote => true do |f| %>
 		<%= f.hidden_field :department_id_equals %>
+		<%= f.hidden_field :taught_by %>
 		<table>
 			<tr>
 				<td><%= f.label :course_number_contains, "Course Number contains" %></td>
@@ -18,6 +19,10 @@
 			<tr>
 				<td><%= f.label :department_id_is, "Department is" %></td>
 				<td><%= autocomplete_field_tag 'department_autocomplete', (Department.find(f.object.department_id_equals).name unless f.object.department_id_equals.nil?), autocomplete_department_name_courses_path, :id_element => '#search_department_id_equals' %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :taught_by, "Instructor is" %></td>
+			    <td><%= autocomplete_field_tag 'instructor_autocomplete', (Person.find(f.object.taught_by).full_name unless f.object.taught_by.nil?), autocomplete_person_fullname_course_offerings_path, :id_element => '#search_taught_by' %></td>
 			</tr>
 			<tr>
 				<td colspan="2">&nbsp;</td>
