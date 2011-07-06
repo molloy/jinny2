@@ -13,7 +13,7 @@ class Course < ActiveRecord::Base
   search_methods :taught_by
 
   def course_number_and_name
-    return read_attribute(:course_number) + " - " + read_attribute(:name)
+    (course_number + " - " + name) unless course_number.nil? or name.nil?
   end
   
   def department_autocomplete
