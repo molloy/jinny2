@@ -22,6 +22,7 @@
 # GradeType.create_or_update(:conditions => { :letter_grade => 'F' }, :letter_grade => 'F', :numeric_weight => 0)
 # GradeType.create_or_update(:conditions => { :letter_grade => 'W' }, :letter_grade => 'W', :numeric_weight => 0)
 # GradeType.create_or_update(:conditions => { :letter_grade => 'Au' }, :letter_grade => 'NA', :numeric_weight => 0)
+# GradeType.create_or_update(:id => 1, :name => 'Bachelor Degree')
 # 
 # PersonType.create_or_update(:conditions => { :name => 'Student' }, :name => 'Student')
 # PersonType.create_or_update(:conditions => { :name => 'Faculty' }, :name => 'Faculty')
@@ -554,6 +555,3 @@
 # DegreeProgram.create_or_update(:id => 10, :title => 'Doctor of Social Welfare', :major => Major.where("name = 'Social Welfare'").first, :degree_type => DegreeType.where("name = 'Highest Professional Degree'").first)
 # DegreeProgram.create_or_update(:id => 11, :title => 'Bachelors in Business Administration', :major => Major.where("name = 'Business'").first, :degree_type => DegreeType.where("name = 'Bachelor Degree'").first)
 # DegreeProgram.create_or_update(:id => 22, :title => 'Bachelors in English', :major => Major.where("name = 'English'").first, :degree_type => DegreeType.where("name = 'Bachelor Degree'").first)
-
-# START remove duplicates
-# END remove duplicates
