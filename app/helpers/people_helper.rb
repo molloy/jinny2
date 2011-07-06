@@ -8,11 +8,11 @@ module PeopleHelper
     	$('#add_course_taken').click(function() {
     		var new_index = new Date() * 1 + parseInt(Math.random()*100000);
     		var new_course_taken_html = '#{course_taken_partial}';
-    		var new_course_taken_name = 'course\[course_takens_attributes\]\[' + new_index + '\]';
-    		var new_course_taken_id = 'course_course_takens_attributes_' + new_index;
+    		var new_course_taken_name = 'person\[course_takens_attributes\]\[' + new_index + '\]';
+    		var new_course_taken_id = 'person_course_takens_attributes_' + new_index;
     		new_course_taken_html = new_course_taken_html
-    			.replace(/course\\[course_takens_attributes\\]\\[\\d+\\]/g, new_course_taken_name)
-    			.replace(/course_course_takens_attributes_\\d+/g, new_course_taken_id);
+    			.replace(/person\\[course_takens_attributes\\]\\[\\d+\\]/g, new_course_taken_name)
+    			.replace(/person_course_takens_attributes_\\d+/g, new_course_taken_id);
     		$('#nested-models').append(new_course_taken_html);
     	});
     });
