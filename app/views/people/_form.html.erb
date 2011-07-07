@@ -20,13 +20,13 @@
 				<%= person_f.input :email %>
 				<%= person_f.input :gender, :as => :radio, :collection => ["M", "F"] %>
 				<% if params[:person_type] == PersonType.student.id.to_s %>
-					<%= person_f.input :dob, :as => :date_picker %>
+					<%= person_f.input :dob_formatted, :as => :date_picker %>
 			   		<%= person_f.input :ssn, :label => 'SSN' %>
 			    	<%= person_f.input :distance_learning, :as => :boolean %>
 			    	<%= person_f.input :degree_program_id, :as => :hidden %>
 					<%= person_f.autocompleted_input :degree_program_autocomplete, :url => autocomplete_degree_program_title_people_path, :id_element => ('#' << form_tag_id(person_f.object_name, 'degree_program_id')), :label => 'Degree Program' %>
-					<%= person_f.input :date_enrolled, :as => :date_picker %>
-					<%= person_f.input :date_graduated, :as => :date_picker %>
+					<%= person_f.input :date_enrolled_formatted, :as => :date_picker, :format => '%m/%d/%Y' %>
+					<%= person_f.input :date_graduated_formatted, :as => :date_picker, :format => '%m/%d/%Y' %>
 				<% elsif params[:person_type] == PersonType.faculty.id.to_s %>
 			    	<%= person_f.input :department_id, :as => :hidden %>
 					<%= person_f.autocompleted_input :department_autocomplete, :url => autocomplete_department_name_people_path, :id_element => ('#' << form_tag_id(person_f.object_name, 'department_id')), :label => 'Department' %>

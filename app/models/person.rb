@@ -17,16 +17,36 @@ class Person < ActiveRecord::Base
   scope :course_taught, lambda {|the_course_id| where{id.in(CourseOffering.where{course_id.eq the_course_id}.select{instructor})}}
   search_methods :course_taught
 
-  def self.find_all_faculty
-    find_all_by_person_type_id(PersonType.faculty, :order => 'surname, given_name')
-  end
-  
   def full_name
     return read_attribute(:given_name) + " " + read_attribute(:surname)
   end
   
   def last_name_first
     return read_attribute(:surname) + ", " + read_attribute(:given_name)
+  end
+
+  def dob_formatted
+    return dob
+  end
+  
+  def dob_formatted=(dob_str)
+    self.dob = Date.strptime(dob_str, '%m/%d/%Y')
+  end
+
+  def date_enrolled_formatted
+    return date_enrolled
+  end
+  
+  def date_enrolled_formatted=(date_enrolled_str)
+    self.date_enrolled = Date.strptime(date_enrolled_str, '%m/%d/%Y')
+  end
+  
+  def date_graduated_formatted
+    return date_graduated
+  end
+  
+  def date_graduated_formatted=(date_graduated_str)
+    self.date_graduated = Date.strptime(date_graduated_str, '%m/%d/%Y')
   end
 
   def picture_file=(input_file)
