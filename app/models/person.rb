@@ -30,7 +30,7 @@ class Person < ActiveRecord::Base
   end
   
   def dob_formatted=(dob_str)
-    self.dob = Date.strptime(dob_str, '%m/%d/%Y')
+    self.dob = Date.strptime(dob_str, '%m/%d/%Y') unless dob_str.blank?
   end
 
   def date_enrolled_formatted
@@ -38,7 +38,7 @@ class Person < ActiveRecord::Base
   end
   
   def date_enrolled_formatted=(date_enrolled_str)
-    self.date_enrolled = Date.strptime(date_enrolled_str, '%m/%d/%Y')
+    self.date_enrolled = Date.strptime(date_enrolled_str, '%m/%d/%Y') unless date_enrolled_str.blank?
   end
   
   def date_graduated_formatted
@@ -46,7 +46,7 @@ class Person < ActiveRecord::Base
   end
   
   def date_graduated_formatted=(date_graduated_str)
-    self.date_graduated = Date.strptime(date_graduated_str, '%m/%d/%Y')
+    self.date_graduated = Date.strptime(date_graduated_str, '%m/%d/%Y') unless date_graduated_str.blank?
   end
 
   def picture_file=(input_file)
