@@ -2,6 +2,7 @@ class Person < ActiveRecord::Base
   has_many :addresses, :dependent => :destroy
   has_many :phones, :dependent => :destroy
   has_many :course_takens, :dependent => :destroy
+  # has_many :course_takens, :dependent => :destroy, :finder_sql => 'SELECT course_takens.* FROM course_takens INNER JOIN course_offerings ON course_takens.course_offering_id = course_offerings.id WHERE course_takens.person_id = #{id} ORDER BY course_offerings.year'
   # has_many :course_offerings, :class_name => "CourseOffering", :finder_sql => 'SELECT co.*  FROM course_offerings WHERE co.instructor = #{id}'
   has_many :course_offerings, :foreign_key => "instructor"
   

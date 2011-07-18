@@ -97,7 +97,10 @@ strong{
     left:0;
     line-height:15px;
 }
+
 .main-menu ul{
+	display: inline;
+	position: relative;
     margin:0 -1px;
     padding:0;
     list-style:none;

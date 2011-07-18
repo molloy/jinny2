@@ -45,7 +45,7 @@ class PeopleController < ApplicationController
 
   # GET /people/1/edit
   def edit
-    @person = Person.find(params[:id])
+    @person = Person.includes(:course_takens => :course_offering).order('course_offerings.year, course_offerings.term_type_id').find(params[:id])
   end
 
   # POST /people
