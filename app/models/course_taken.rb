@@ -6,6 +6,8 @@ class CourseTaken < ActiveRecord::Base
   belongs_to :course_taken_status
   belongs_to :grade_type
 
+  default_scope :include => [:person, :course_offering], :order => 'people.surname, people.given_name, course_offerings.year, course_offerings.term_type_id'
+  
   validates_presence_of :course_id, :term_type_id, :year
   
   def set_course_offering

@@ -1,14 +1,21 @@
 class CourseTakensController < ApplicationController
-  before_filter :require_user
+  before_filter :require_user, :load_search_params
+
+  respond_to :xls, :only => :export
+
+  def load_search_params
+    @search = search_by_meta :course_taken
+  end
 
   # GET /course_takens
   # GET /course_takens.xml
   def index
-    @course_takens = CourseTaken.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @course_takens }
+    if @search.nil?
+      @search = CourseTaken.search(params[:search])
+      @course_takens = nil
+    else
+      # @search.meta_sort = "surname.asc" if @search.meta_sort.nil?
+      @course_takens = @search.paginate(:page => params[:page])
     end
   end
 
@@ -16,22 +23,12 @@ class CourseTakensController < ApplicationController
   # GET /course_takens/1.xml
   def show
     @course_taken = CourseTaken.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @course_taken }
-    end
   end
 
   # GET /course_takens/new
   # GET /course_takens/new.xml
   def new
     @course_taken = CourseTaken.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @course_taken }
-    end
   end
 
   # GET /course_takens/1/edit
@@ -44,15 +41,14 @@ class CourseTakensController < ApplicationController
   def create
     @course_taken = CourseTaken.new(params[:course_taken])
 
-    respond_to do |format|
-      if @course_taken.save
-        flash[:notice] = 'CourseTaken was successfully created.'
-        format.html { redirect_to(@course_taken) }
-        format.xml  { render :xml => @course_taken, :status => :created, :location => @course_taken }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @course_taken.errors, :status => :unprocessable_entity }
-      end
+    if @search.nil?
+      @search = CourseTaken.search(params[:search])
+    end
+
+    if @course_taken.save
+      flash[:notice] = 'CourseTaken was created updated.'
+      @course_takens = @search.paginate(:page => params[:page]) unless @search.nil?
+      redirect_to(course_takens_path(:search => params[:search]))
     end
   end
 
@@ -61,15 +57,14 @@ class CourseTakensController < ApplicationController
   def update
     @course_taken = CourseTaken.find(params[:id])
 
-    respond_to do |format|
-      if @course_taken.update_attributes(params[:course_taken])
-        flash[:notice] = 'CourseTaken was successfully updated.'
-        format.html { redirect_to(@course_taken) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @course_taken.errors, :status => :unprocessable_entity }
-      end
+    if @search.nil?
+      @search = CourseTaken.search(params[:search])
+    end
+
+    if @course_taken.update_attributes(params[:course_taken])
+      flash[:notice] = 'CourseTaken was successfully updated.'
+      @course_takens = @search.paginate(:page => params[:page]) unless @search.nil?
+      redirect_to(course_takens_path(:search => params[:search]))
     end
   end
 
@@ -79,9 +74,23 @@ class CourseTakensController < ApplicationController
     @course_taken = CourseTaken.find(params[:id])
     @course_taken.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(course_takens_url) }
-      format.xml  { head :ok }
+    if @search.nil?
+      @search = CourseTaken.search(params[:search])
     end
+
+    @course_takens = @search.paginate(:page => params[:page]) unless @search.nil?
+    redirect_to(course_takens_path(:search => params[:search]))
+  end
+
+  def export
+    if @search.nil?
+      @course_takens = CourseTaken.search(params[:search])
+      @course_takens = nil
+    else
+      # @search.meta_sort = "surname.asc" if @search.meta_sort.nil?
+      @course_takens = @search.all
+    end
+    
+    send_data @course_takens.to_xls_data(:columns => [{:person => [:given_name, :surname, :ssn, {:degree_program => [:title]}]}, {:course_offering => [{:course => [:course_number, :name]}, :year, {:term_type => [:name]}]}, {:course_taken_status => [:name]}, {:grade_type => [:name]}]), :filename => 'transcritps.xls'
   end
 end

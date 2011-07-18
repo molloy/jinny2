@@ -35,7 +35,9 @@ ActionController::Routing::Routes.draw do |map|
     get 'autocomplete_person_fullname', :on => :collection
   end
 
-  resources :course_takens
+  resources :course_takens do
+    match 'export', :on => :collection
+  end
 
   resources :course_takens
 

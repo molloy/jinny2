@@ -21,12 +21,7 @@ class PeopleController < ApplicationController
     else
       @search.meta_sort = "surname.asc" if @search.meta_sort.nil?
       @people = @search.paginate(:page => params[:page])
-    end
-    
-    # if is_student
-    #   @person = current_person
-    #   redirect_to(@person)
-    # end
+    end    
   end
 
   # GET /people/1
@@ -58,7 +53,7 @@ class PeopleController < ApplicationController
     end
 
     if @person.save
-      flash[:notice] = 'Person was created updated.'
+      flash[:notice] = 'Person was successfully created.'
       @people = @search.paginate(:page => params[:page]) unless @search.nil?
       redirect_to(people_path(:person_type => params[:person_type], :search => params[:search]))
     end
