@@ -5,10 +5,27 @@
 	</h3>
 	<div id="search_for_panel" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: block; overflow-x: auto; overflow-y: auto; padding-top: 11px; padding-bottom: 11px;">
 		<%= form_for @search, course_takens_path, :method => :get, :remote => true do |f| %>
+		<%= f.hidden_field :person_degree_program_id_equals %>
 		<table>
 			<tr>
+				<td><%= f.label :person_given_name_contains, "First Name contains" %></td>
+				<td><%= f.text_field :person_given_name_contains %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :person_surname_contains, "Last Name contains" %></td>
+				<td><%= f.text_field :person_surname_contains %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :person_middle_name_contains, "Middle Name contains" %></td>
+				<td><%= f.text_field :person_middle_name_contains %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :person_ssn_contains, "SSN contains" %></td>
+				<td><%= f.text_field :person_ssn_contains %></td>
+			</tr>
+			<tr>
 				<td colspan="2">
-					<!-- <%= f.submit "Search" %>&nbsp; -->
+					<%= f.submit "Search" %>&nbsp;
 					<%= search_show_all_button 'course_taken', course_takens_path(:search => {'show_all' => 'true'}) %>&nbsp;
 					<!-- <%= new_button new_course_taken_path(:search => params[:search]) %> -->
 				</td>
