@@ -91,6 +91,6 @@ class CourseTakensController < ApplicationController
       @course_takens = @search.all
     end
     
-    send_data @course_takens.to_xls_data(:columns => [{:person => [:given_name, :surname, :ssn, {:degree_program => [:title]}]}, {:course_offering => [{:course => [:course_number, :name]}, :year, {:term_type => [:name]}]}, {:course_taken_status => [:name]}, {:grade_type => [:name]}]), :filename => 'transcritps.xls'
+    send_data @course_takens.to_xls_data(:columns => [{:person => [:surname, :given_name, :ssn, {:degree_program => [:title]}]}, {:course_offering => [{:course => [:course_number, :name]}, :year, {:term_type => [:name]}]}, {:course_taken_status => [:name]}, {:grade_type => [:name]}], :headers => ['last name', 'first name', 'ssn', 'degree program', 'course number', 'course name', 'year', 'term', 'status', 'grade']), :filename => 'transcritps.xls'
   end
 end

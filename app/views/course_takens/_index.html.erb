@@ -24,6 +24,10 @@
 				<td><%= f.text_field :person_ssn_contains %></td>
 			</tr>
 			<tr>
+				<td><%= f.label :person_degree_program_id_equals, "Degree program is" %></td>
+			    <td><%= autocomplete_field_tag 'person_degree_program_autocomplete', (DegreeProgram.find(f.object.person_degree_program_id_equals).title unless f.object.person_degree_program_id_equals.nil?), autocomplete_degree_program_title_people_path, :id_element => '#search_person_degree_program_id_equals' %></td>
+			</tr>
+			<tr>
 				<td colspan="2">
 					<%= f.submit "Search" %>&nbsp;
 					<%= search_show_all_button 'course_taken', course_takens_path(:search => {'show_all' => 'true'}) %>&nbsp;

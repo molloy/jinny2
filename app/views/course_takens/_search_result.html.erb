@@ -14,7 +14,8 @@
 
 			<table class="search_result">
 			  <tr>
-			    <th>Person</th>
+			    <th>Last Name</th>
+			    <th>First Name</th>
 			    <th>SSN</th>
 			    <th>Degree Program</th>
 				<th>Course</th>
@@ -26,7 +27,8 @@
 	
 			<% @course_takens.each do |course_taken| %>
 			  <tr>
-			    <td><%=course_taken.person.full_name %></td>
+			    <td><%=course_taken.person.surname %></td>
+			    <td><%=course_taken.person.given_name %></td>
 			    <td><%=course_taken.person.ssn %></td>
 			    <td><%=course_taken.person.degree_program.title %></td>
 			    <td><%=course_taken.course_offering.course.course_number_and_name %></td>
