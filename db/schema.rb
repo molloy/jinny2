@@ -179,8 +179,6 @@ ActiveRecord::Schema.define(:version => 20110629072825) do
     t.boolean  "distance_learning"
   end
 
-  add_index "people", ["email"], :name => "index_people_on_email"
-
   create_table "person_types", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
