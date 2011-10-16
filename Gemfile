@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.5'
+gem 'rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -8,11 +8,16 @@ gem 'rails', '3.0.5'
 gem 'mysql2', '0.2.6'
 gem 'authlogic', '2.1.6'
 gem 'formtastic', '1.2.3'
+# gem 'formtastic', '2.0.0.rc1'
 gem 'paperclip', '2.3.8'
 gem 'rails3-jquery-autocomplete', '0.6.2'
+# gem 'rails3-jquery-autocomplete', '0.8.0'
+gem 'formtastic_datepicker_inputs'
 gem 'meta_search', '1.0.3'
+gem 'squeel', '0.8.4'
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'remotipart'
+gem 'to_xls'
 
 # Use unicorn as the web server
 # gem 'unicorn'

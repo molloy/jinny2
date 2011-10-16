@@ -15,7 +15,8 @@ class CourseOfferingsController < ApplicationController
       @search = CourseOffering.search(params[:search])
       @course_offerings = nil
     else
-      @course_offerings = @search.all unless @search.nil?
+      @search.meta_sort = "year.asc" if @search.meta_sort.nil?
+      @course_offerings = @search.paginate(:page => params[:page])
     end
   end
 
@@ -40,19 +41,15 @@ class CourseOfferingsController < ApplicationController
   # POST /course_offerings.xml
   def create
     @course_offering = CourseOffering.new(params[:course_offering])
-    # respond_to do |format|
-    #   if @course_offering.save
-    #     flash[:notice] = 'The Course Offering was successfully created.'
-    #   else
-    #     format.js { render :action => "new" }
-    #   end
-    # end
+
+    if @search.nil?
+      @search = CourseOffering.search(params[:search])
+    end
 
     if @course_offering.save
       flash[:notice] = 'Course Offering was successfully created.'
-      render :action => 'index'
-    else
-      render :action => 'new'
+      @course_offerings = @search.paginate(:page => params[:page]) unless @search.nil?
+      redirect_to(course_offerings_path(:search => params[:search]))
     end
   end
 
@@ -79,9 +76,8 @@ class CourseOfferingsController < ApplicationController
 
     if @course_offering.update_attributes(params[:course_offering])
       flash[:notice] = 'Course Offering was successfully updated.'
-    #   render :action => 'index'
-    # else
-    #   render :action => 'edit'
+      @course_offerings = @search.paginate(:page => params[:page]) unless @search.nil?
+      redirect_to(course_offerings_path(:search => params[:search]))
     end
   end
 
@@ -91,44 +87,23 @@ class CourseOfferingsController < ApplicationController
     @course_offering = CourseOffering.find(params[:id])
     @course_offering.destroy
 
-    render 'index.js.erb'
-  end
-  
-  # def search
-  #   if @search_condition_params && (defined? @search_condition_params['show_all']) && (@search_condition_params['show_all'])
-  #     @course_offerings = CourseOffering.all
-  #   else
-  #     @search_condition_params = search_condition_parameters
-  #     search_conditions = @search_condition_params[0]
-  #     unless search_conditions.blank?
-  #       @course_offerings = CourseOffering.where(@search_condition_params).all
-  #     end
-  #   end
-    
-    # if params[:show_all]
-    #   @course_offerings = CourseOffering.all
-    # else
-    #   @search_condition_params = search_condition_parameters
-    #   search_conditions = @search_condition_params[0]
-    #   unless search_conditions.blank?
-    #     @course_offerings = CourseOffering.where(@search_condition_params).all
-    #   end
-    # end
-  # end
+    if @search.nil?
+      @search = CourseOffering.search(params[:search])
+    end
 
-  # def syllabus_data
-  #   @course_offerings = CourseOffering.find(params[:id])
-  #   if @course_offerings.syllabus
-  #     send_data(@course_offerings.syllabus, :file_name => @course_offerings.syllabus_file_name, :content_type => @course_offerings.syllabus_content_type, :disposition => 'inline')
-  #   else
-  #     send_data(' ', :content_type => 'text/html')
-  #   end
-  # end
-
-  def filter_by_year
-    @course_offerings_by_year = CourseOffering.where(:year => params['year'])
-    
-    render :partial => "course_offerings_by_year"
+    @course_offerings = @search.paginate(:page => params[:page]) unless @search.nil?
+    redirect_to(course_offerings_path(:search => params[:search]))
   end
-  
+
+  def export
+    if @search.nil?
+      @search = CourseOffering.search(params[:search])
+      @course_offerings = nil
+    else
+      @search.meta_sort = "year.asc" if @search.meta_sort.nil?
+      @course_offerings = @search.all
+    end
+    
+    send_data @courses.to_xls_data, :filename => 'course_offerings.xls'
+  end
 end

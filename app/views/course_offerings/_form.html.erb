@@ -1,25 +1,41 @@
-<div id="errorExplanation" style="display: none;">
+<div id="course_offering_panel" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+		<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#tabs-1">Course Offering</a></li>
+	</ul>
+
+	<%= semantic_form_for @course_offering, :remote => true do |f| %>
+		<%= params_as_hidden_fields 'search' %>
+		<div id="tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+			<% f.inputs do %>
+				<%= f.semantic_errors :state %>
+				<%= f.input :course_id, :as => :hidden %>
+				<%= f.autocompleted_input :course_autocomplete, :label => 'Course', :url => autocomplete_course_number_and_name_course_offerings_path, :id_element => '#course_offering_course_id', :required => true %>
+				<%= f.input :year, :required => true %>
+				<%= f.input :term_type, :required => true %>
+				<%= f.input :instructor, :as => :hidden %>
+				<%= f.autocompleted_input :instructor_autocomplete, :label => 'Instructor', :url => autocomplete_person_fullname_course_offerings_path, :id_element => '#course_offering_instructor' %>
+				<!-- <li>
+					<label>Current Syllabus</label>
+					<%= link_to @course_offering.syllabus_file_name, @course_offering.syllabus.url %>
+				</li>
+				<%= f.input :syllabus, :as => :file, :label => 'Upload New Syllabus' %> -->
+			<% end %>
+	
+			<% f.buttons do%>
+				<%= f.commit_button :label => 'Submit' %>
+				<%= back_button course_offerings_path(:search => params[:search]) %>
+				<!-- <%= link_to 'Back', course_offerings_path(:search_condition_params => @search_condition_params), :method => :get, :remote => true %> -->
+			<% end %>
+		</div>
+	<% end %>
 </div>
 
-<%= semantic_form_for @course_offering, :html => { :multipart => true }, :format => :js do |f| %>
-	<!-- <%= render "shared/error_messages", :target => @course_offering %> -->
-	<% f.inputs do %>
-		<%= f.semantic_errors :state %>
-		<%= f.input :course_id, :as => :hidden %>
-		<%= f.autocompleted_input :course_autocomplete, :label => 'Course', :url => autocomplete_course_number_and_name_course_offerings_path, :id_element => '#course_offering_course_id', :required => true %>
-		<%= f.input :year, :required => true %>
-		<%= f.input :term_type, :required => true %>
-		<%= f.input :instructor, :as => :hidden %>
-		<%= f.autocompleted_input :instructor_autocomplete, :label => 'Instructor', :url => autocomplete_person_fullname_course_offerings_path, :id_element => '#course_offering_instructor', :required => true %>
-		<li>
-			<label>Current Syllabus</label>
-			<%= link_to @course_offering.syllabus_file_name, @course_offering.syllabus.url %>
-		</li>
-		<%= f.input :syllabus, :as => :file, :label => 'Upload New Syllabus' %>
-	<% end %>
-	
-	<% f.buttons do%>
-		<%= f.commit_button :label => 'Submit' %>
-		<%= link_to 'Back', course_offerings_path(:search_condition_params => @search_condition_params), :method => :get, :remote => true %>
-	<% end %>
-<% end %>
+<script>
+$(document).ready(function(){
+	$('input.ui-date-picker').datepicker();
+
+	$('.formtastic.course_offering').live('ajax:beforeSend', function()  { $('#course_offering_panel').hide(); $('#j-loading').show(); });
+	$('.formtastic.course_offering').live('ajax:complete', function() { $('#j-loading').hide(); });
+	$('.formtastic.course_offering').live('ajax:error', function() { $('#j-loading').hide(); });
+});
+</script>

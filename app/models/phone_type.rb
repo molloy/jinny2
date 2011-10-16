@@ -1,5 +1,6 @@
 class PhoneType < ActiveRecord::Base
   validates_presence_of :name
+  validates_uniqueness_of :name
 
   def self.mobile
     return @phone_type_mobile if defined?(@phone_type_mobile)

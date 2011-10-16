@@ -1,5 +1,6 @@
 class AddressType < ActiveRecord::Base
   validates_presence_of :name
+  validates_uniqueness_of :name
 
   def self.home
     return @address_type_home if defined?(@address_type_home)

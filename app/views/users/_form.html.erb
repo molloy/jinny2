@@ -3,6 +3,7 @@
 		<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#tabs-1">User</a></li>
 	</ul>
 	<%= semantic_form_for @user, :remote => true do |user_f| %>
+		<%= params_as_hidden_fields 'search' %>
 		<div id="tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
 			<%= user_f.inputs do %>
 				<%= user_f.input :person_type, :label => 'User Type', :required => true %>
@@ -15,7 +16,7 @@
 			
 			<%= user_f.buttons :class=>'buttons left_aligned_buttons' do %>
 				<%= user_f.commit_button :label => 'Submit' %>
-				<%= user_back_button %>
+				<%= back_button users_path(:search => params[:search]) %>
 			<% end %>
 		</div>
 	<% end %>
@@ -32,14 +33,5 @@ $(document).ready(function(){
 	$('.formtastic.user').live('ajax:beforeSend', function()  { $('#user_panel').hide(); $('#j-loading').show(); });
 	$('.formtastic.user').live('ajax:complete', function() { $('#j-loading').hide(); });
 	$('.formtastic.user').live('ajax:error', function() { $('#j-loading').hide(); });
-
-	// user back button
-    $(document).ready(function() {
-    	$('.user_back_button').click(function() {
-    		$('#user_panel').hide();
-    		$('#j-loading').show();
-    		$.getScript('<%= users_path(:search => params[:search], :user_type => params[:user_type]).gsub(/\?search/, ".js?search") %>', function() { $('#j-loading').hide(); });
-      });
-    });
 });
 </script>

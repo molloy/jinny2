@@ -1,10 +1,16 @@
 <div id="person_panel" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 		<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#tabs-1"><%= PersonType.find(params[:person_type]).name %></a></li>
+		<% if params[:person_type] == PersonType.student.id.to_s %>
 		<li class="ui-state-default ui-corner-top"><a href="#tabs-2">Transcripts</a></li>
+		<% end %>
+		<% if params[:person_type] == PersonType.faculty.id.to_s %>
+		<li class="ui-state-default ui-corner-top"><a href="#tabs-2">Courses Taught</a></li>
+		<% end %>
 	</ul>
 	<%= semantic_form_for @person, :remote => true do |person_f| %>
 		<%= hidden_field_tag :person_type, params[:person_type] %>
+		<%= params_as_hidden_fields 'search' %>
 		<div id="tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
 			<%= person_f.inputs do %>
 				<%= person_f.input :person_type_id, :as => :hidden, :value => params[:person_type] %>
@@ -14,13 +20,13 @@
 				<%= person_f.input :email %>
 				<%= person_f.input :gender, :as => :radio, :collection => ["M", "F"] %>
 				<% if params[:person_type] == PersonType.student.id.to_s %>
-					<%= person_f.input :dob, :as => :date %>
+					<%= person_f.input :dob_formatted, :label => 'Date of Birth', :as => :date_picker %>
 			   		<%= person_f.input :ssn, :label => 'SSN' %>
 			    	<%= person_f.input :distance_learning, :as => :boolean %>
 			    	<%= person_f.input :degree_program_id, :as => :hidden %>
 					<%= person_f.autocompleted_input :degree_program_autocomplete, :url => autocomplete_degree_program_title_people_path, :id_element => ('#' << form_tag_id(person_f.object_name, 'degree_program_id')), :label => 'Degree Program' %>
-					<%= person_f.input :date_enrolled, :as => :date %>
-					<%= person_f.input :date_graduated, :as => :date %>
+					<%= person_f.input :date_enrolled_formatted, :label => 'Date Enrolled', :as => :date_picker, :format => '%m/%d/%Y' %>
+					<%= person_f.input :date_graduated_formatted, :label => 'Date Graduated', :as => :date_picker, :format => '%m/%d/%Y' %>
 				<% elsif params[:person_type] == PersonType.faculty.id.to_s %>
 			    	<%= person_f.input :department_id, :as => :hidden %>
 					<%= person_f.autocompleted_input :department_autocomplete, :url => autocomplete_department_name_people_path, :id_element => ('#' << form_tag_id(person_f.object_name, 'department_id')), :label => 'Department' %>
@@ -30,6 +36,7 @@
 			
 			<%= person_f.semantic_fields_for :addresses do |address_f| %>
 				<%= address_f.inputs do %>
+					<%= address_f.input :address_type_id, :as => :hidden %>
 					<%= address_f.input :address_1, :label => address_f.object.address_type.name << ' Address 1' %>
 					<%= address_f.input :address_2 %>
 					<%= address_f.input :address_3 %>
@@ -41,15 +48,17 @@
 
 			<%= person_f.semantic_fields_for :phones do |phone_f| %>
 				<%= phone_f.inputs do %>
+					<%= phone_f.input :phone_type_id, :as => :hidden %>
 					<%= phone_f.input :phone_number, :label => phone_f.object.phone_type.name << ' Phone' %>
 				<% end %>
 			<% end %>
 
 			<%= person_f.buttons :class=>'buttons left_aligned_buttons' do %>
 				<%= person_f.commit_button :label => 'Submit' %>
-				<%= person_back_button %>
+				<%= back_button people_path(:search => params[:search], :person_type => params[:person_type]) %>
 			<% end %>
 		</div>
+		<% if params[:person_type] == PersonType.student.id.to_s %>
 		<div id="tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
 			<div id="nested-models" class="nested-models">
 				<fieldset class="inputs">
@@ -63,6 +72,9 @@
 						<li class="string optional term">
 							<span>Term</span>
 						</li>
+						<!-- <li class="string optional instructor">
+							<span>Instructor</span>
+						</li> -->
 						<li class="string optional status">
 							<span>Status</span>
 						</li>
@@ -76,25 +88,61 @@
 						<%= course_taken_f.input :course, :input_html => { :class => 'course', :disabled => true } %>
 						<%= course_taken_f.input :year, :input_html => { :disabled => true } %>
 						<%= course_taken_f.input :term_type, :input_html => { :disabled => true }, :label => 'Term' %>
+						<!-- <%= course_taken_f.input :instructor_person, :input_html => { :disabled => true }, :label => 'Instructor' %> -->
 						<%= course_taken_f.input :course_taken_status, :label => 'Status', :required => true %>
 						<%= course_taken_f.input :grade_type, :required => true, :label => 'Grade' %>
+						<%= course_taken_f.hidden_field :_destroy %>
 						<%= delete_course_taken_button %>
 					<% end %>
 				<% end %>
 			</div>
 
 			<%= add_course_taken_button person_f %>
+			<br/>&nbsp;
+			<%= person_f.buttons :class=>'buttons left_aligned_buttons' do %>
+				<%= person_f.commit_button :label => 'Submit' %>
+				<%= back_button people_path(:search => params[:search], :person_type => params[:person_type]) %>
+			<% end %>
+		</div>
+		<% end %>
+
+		<% if params[:person_type] == PersonType.faculty.id.to_s %>
+		<div id="tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+			<div id="nested-models" class="nested-models">
+				<fieldset class="inputs">
+					<ol>
+						<li class="string optional course">
+							<span>Course</span>
+						</li>
+						<li class="string optional year">
+							<span>Year</span>
+						</li>
+						<li class="string optional term">
+							<span>Term</span>
+						</li>
+					</ol>
+				</fieldset>
+				<%= person_f.semantic_fields_for :course_offerings do |course_offering_f| %>
+					<%= course_offering_f.inputs do %>
+						<%= course_offering_f.input :course_number_and_name, :input_html => { :disabled => true } %>
+						<%= course_offering_f.input :year, :input_html => { :disabled => true } %>
+						<%= course_offering_f.input :term_type, :input_html => { :disabled => true }, :label => 'Term' %>
+					<% end %>
+				<% end %>
+			</div>
 
 			<%= person_f.buttons :class=>'buttons left_aligned_buttons' do %>
 				<%= person_f.commit_button :label => 'Submit' %>
-				<%= person_back_button %>
+				<%= back_button people_path(:search => params[:search], :person_type => params[:person_type]) %>
 			<% end %>
 		</div>
+		<% end %>
 	<% end %>
 </div>
 
 <script>
 $(document).ready(function(){
+	$('input.ui-date-picker').datepicker();
 	$('#person_panel').tabs({selected: 0});
 
 	// $('#nested-models fieldset:first label').css({ 'display': 'block' });
@@ -104,14 +152,5 @@ $(document).ready(function(){
 	$('.formtastic.person').live('ajax:beforeSend', function()  { $('#person_panel').hide(); $('#j-loading').show(); });
 	$('.formtastic.person').live('ajax:complete', function() { $('#j-loading').hide(); });
 	$('.formtastic.person').live('ajax:error', function() { $('#j-loading').hide(); });
-
-	// person back button
-    $(document).ready(function() {
-    	$('.person_back_button').click(function() {
-    		$('#person_panel').hide();
-    		$('#j-loading').show();
-    		$.getScript('<%= people_path(:search => params[:search], :person_type => params[:person_type]).gsub(/\?search/, ".js?search") %>', function() { $('#j-loading').hide(); });
-      });
-    });
 });
 </script>

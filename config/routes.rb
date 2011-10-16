@@ -3,7 +3,9 @@ ActionController::Routing::Routes.draw do |map|
   
   resource :user_session
   
-  resources :users
+  resources :users do
+    match 'export', :on => :collection
+  end
 
   resources :departments
 
@@ -20,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
   match '/people/register', :to => 'people#register'
   
   resources :people do
-    match 'search', :on => :collection
+    match 'export', :on => :collection
     get 'autocomplete_degree_program_title', :on => :collection
     get 'autocomplete_department_name', :on => :collection
   end
@@ -28,11 +30,14 @@ ActionController::Routing::Routes.draw do |map|
   match 'course_offerings/:id/syllabus_data/:file_name', :to => 'course_offerings#syllabus_data'
 
   resources :course_offerings do
+    match 'export', :on => :collection
     get 'autocomplete_course_number_and_name', :on => :collection
     get 'autocomplete_person_fullname', :on => :collection
   end
 
-  resources :course_takens
+  resources :course_takens do
+    match 'export', :on => :collection
+  end
 
   resources :course_takens
 
@@ -47,14 +52,16 @@ ActionController::Routing::Routes.draw do |map|
   resources :degrees
 
   resources :courses do
+    match 'export', :on => :collection
     get 'autocomplete_department_name', :on => :collection
     get 'autocomplete_person_fullname', :on => :collection
-    match 'search', :on => :collection
   end
 
   resources :course_takens
 
-  resources :courses
+  resources :courses do
+    match 'export', :on => :collection
+  end
 
   resources :course_taken_statuses
 

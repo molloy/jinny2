@@ -112,11 +112,11 @@ class ApplicationController < ActionController::Base
 
   private
     def is_student
-      return current_user.person.person_type_id == PersonType.student.id
+      return current_user.person_type_id == PersonType.student.id
     end
   
     def is_administrator
-      return current_user.person.person_type_id == PersonType.administrator.id
+      return current_user.person_type_id == PersonType.administrator.id
     end
   
     def course_taken_status_attending
@@ -147,7 +147,7 @@ class ApplicationController < ActionController::Base
       if current_user
         store_location
         flash[:notice] = "You must be logged out to access this page"
-        redirect_to people_url
+        redirect_to root_url
         return false
       end
     end

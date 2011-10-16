@@ -1,5 +1,6 @@
 class PersonType < ActiveRecord::Base
   validates_presence_of :name
+  validates_uniqueness_of :name
   
   def self.student
     return @person_type_student if defined?(@person_type_student)

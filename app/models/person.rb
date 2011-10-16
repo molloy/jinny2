@@ -2,26 +2,52 @@ class Person < ActiveRecord::Base
   has_many :addresses, :dependent => :destroy
   has_many :phones, :dependent => :destroy
   has_many :course_takens, :dependent => :destroy
+  # has_many :course_takens, :dependent => :destroy, :finder_sql => 'SELECT course_takens.* FROM course_takens INNER JOIN course_offerings ON course_takens.course_offering_id = course_offerings.id WHERE course_takens.person_id = #{id} ORDER BY course_offerings.year'
+  # has_many :course_offerings, :class_name => "CourseOffering", :finder_sql => 'SELECT co.*  FROM course_offerings WHERE co.instructor = #{id}'
+  has_many :course_offerings, :foreign_key => "instructor"
   
   has_one :user, :dependent => :destroy
   
   belongs_to :degree_program
   belongs_to :department
 
-  accepts_nested_attributes_for :addresses, :phones, :course_takens, :allow_destroy => true
+  accepts_nested_attributes_for :addresses, :phones, :course_takens, :course_offerings, :allow_destroy => true
   
   validates_presence_of :person_type_id, :given_name, :surname
-
-  def self.find_all_faculty
-    find_all_by_person_type_id(PersonType.faculty, :order => 'surname, given_name')
-  end
   
+  scope :course_taught, lambda {|the_course_id| where{id.in(CourseOffering.where{course_id.eq the_course_id}.select{instructor})}}
+  search_methods :course_taught
+
   def full_name
     return read_attribute(:given_name) + " " + read_attribute(:surname)
   end
   
   def last_name_first
     return read_attribute(:surname) + ", " + read_attribute(:given_name)
+  end
+
+  def dob_formatted
+    return dob
+  end
+  
+  def dob_formatted=(dob_str)
+    self.dob = Date.strptime(dob_str, '%m/%d/%Y') unless dob_str.blank?
+  end
+
+  def date_enrolled_formatted
+    return date_enrolled
+  end
+  
+  def date_enrolled_formatted=(date_enrolled_str)
+    self.date_enrolled = Date.strptime(date_enrolled_str, '%m/%d/%Y') unless date_enrolled_str.blank?
+  end
+  
+  def date_graduated_formatted
+    return date_graduated
+  end
+  
+  def date_graduated_formatted=(date_graduated_str)
+    self.date_graduated = Date.strptime(date_graduated_str, '%m/%d/%Y') unless date_graduated_str.blank?
   end
 
   def picture_file=(input_file)
@@ -55,4 +81,7 @@ class Person < ActiveRecord::Base
   
   def department_autocomplete=(val)
   end
+  
+  cattr_reader :per_page
+  @@per_page = 10
 end

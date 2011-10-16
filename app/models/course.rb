@@ -8,8 +8,11 @@ class Course < ActiveRecord::Base
   validates_presence_of :course_number, :name, :department, :units
   validates_numericality_of :units
 
+  scope :taught_by, lambda {|person_id| where{id.in(CourseOffering.where{instructor.eq person_id}.select{course_id})}}
+  search_methods :taught_by
+
   def course_number_and_name
-    return read_attribute(:course_number) + " - " + read_attribute(:name)
+    (course_number + " - " + name) unless course_number.nil? or name.nil?
   end
   
   def department_autocomplete
@@ -18,4 +21,7 @@ class Course < ActiveRecord::Base
   
   def department_autocomplete=(val)
   end
+
+  cattr_reader :per_page
+  @@per_page = 10
 end

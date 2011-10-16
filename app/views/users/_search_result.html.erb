@@ -1,27 +1,36 @@
-<% unless @users.nil? %>
-	<table class="search_result">
-	  <tr>
-	    <th>Email</th>
-	    <th><%= sort_link @search, :given_name, "First" %></th>
-	    <th><%= sort_link @search, :surname, "Last" %></th>
-	  </tr>
-	
-	<% @users.each do |user| %>
-	  <tr>
-	    <td><%=h user.email %></td>
-	    <td><%=h user.given_name %></td>
-	    <td><%=h user.surname %></td>
-	    <td><%= link_to 'Edit', edit_user_path(user, :search => params[:search]), :remote => true %></td>
-		<td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete, :remote => true %></td>
-	  </tr>
-	<% end %>
-	</table>
-	<script>
-	$(document).ready(function(){
-		$('a.sort_link').live('click', function () {
-			$.getScript(this.href);
-			return false;
-		});
-	});
-	</script>
-<% end %>
+<div id="search_result_container_panel" class="ui-accordion ui-widget ui-helper-reset ui-accordion-icons">
+	<div id="search_result_loading" class="j-loading-small" style="display: none"></div>
+	<h3 id="search_result_header" class="header ui-accordion-header ui-helper-reset ui-state-default ui-corner-top">
+		<span class="ui-icon ui-icon-triangle-1-s"></span>
+		<a href="#">Search Results</a>
+	</h3>
+	<div id="search_result_panel" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: block; overflow-x: auto; overflow-y: auto; padding-top: 11px; padding-bottom: 11px;">
+		<% unless @users.nil? %>
+			<%= will_paginate @users %>
+
+			<table class="search_result">
+				<tr>
+					<th><%= sort_link @search, :person_type_name, "Type" %></th>
+					<th><%= sort_link @search, :email, "Email" %></th>
+					<th><%= sort_link @search, :given_name, "First" %></th>
+					<th><%= sort_link @search, :surname, "Last" %></th>
+				</tr>
+
+			<% @users.each do |user| %>
+				<tr>
+					<td><%= user.person_type.name unless user.person_type.nil? %></td>
+					<td><%= user.email %></td>
+					<td><%= user.given_name %></td>
+					<td><%= user.surname %></td>
+					<td><%= link_to 'Edit', edit_user_path(user, :search => params[:search]), :remote => true %></td>
+					<td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete, :remote => true %></td>
+				</tr>
+			<% end %>
+
+			</table>
+
+			<%= will_paginate @users %>
+
+		<% end %>
+	</div>
+</div>

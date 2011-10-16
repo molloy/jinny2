@@ -13,7 +13,7 @@ class UsersController < ApplicationController
       @users = nil
     else
       @search.meta_sort = "email.asc" if @search.meta_sort.nil?
-      @users = @search.all
+      @users = @search.paginate(:page => params[:page])
     end
   end
 
@@ -33,11 +33,14 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
 
+    if @search.nil?
+      @search = User.search(params[:search])
+    end
+
     if @user.save
       flash[:notice] = 'User was successfully created.'
-      render :action => 'index'
-    else
-      render :action => 'new'
+      @users = @search.paginate(:page => params[:page]) unless @search.nil?
+      redirect_to(users_path(:search => params[:search]))
     end
   end
 
@@ -48,9 +51,9 @@ class UsersController < ApplicationController
 
     if @user.update_attributes(params[:user])
       flash[:notice] = 'User was successfully updated.'
+      @users = @search.paginate(:page => params[:page]) unless @search.nil?
+      redirect_to(users_path(:search => params[:search]))
     end
-
-    @search = User.search(params[:search])
   end
 
   # DELETE /users/1
@@ -59,11 +62,23 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(users_url) }
-      format.xml  { head :ok }
+    if @search.nil?
+      @search = User.search(params[:search])
     end
 
-    @search = User.search(params[:search])
+    @users = @search.paginate(:page => params[:page]) unless @search.nil?
+    redirect_to(users_path(:search => params[:search]))
+  end
+
+  def export
+    if @search.nil?
+      @search = User.search(params[:search])
+      @users = nil
+    else
+      @search.meta_sort = "email.asc" if @search.meta_sort.nil?
+      @users = @search.all
+    end
+    
+    send_data @courses.to_xls_data, :filename => 'users.xls'
   end
 end

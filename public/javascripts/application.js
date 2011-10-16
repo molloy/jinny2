@@ -2,8 +2,9 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 var showCenterPanelLoading = function() {
-	$('#j-center').children().hide();
 	$('#j-loading').show();
+	$('#j-center').empty();
+	$('#j-search-results').empty();
 };
 
 var hideCenterPanelLoading = function() {
@@ -57,5 +58,26 @@ $(document).ready(function() {
 		} else {
 			$(this).parent().parent().parent().remove();
 		}
+	});
+
+	// hide, then show j-center panel when editing
+	$('.search_result a').live('ajax:complete', hideCenterPanelLoading).live('click', showCenterPanelLoading);
+
+	// ajax sorting
+	$('a.sort_link').live('click', function () {
+		$('#j-search-results').empty();
+		// $('#search_result_loading').show();
+		$.getScript(this.href, function() {
+			// $('#search_result_loading').hide();
+		});
+		return false;
+	});
+
+	// ajax pagination
+	$('.pagination a').live('click', function () {
+		$('#j-search-results').empty();
+		$.getScript(this.href, function() {
+		});
+		return false;
 	});
 });
