@@ -1,84 +1,89 @@
 ActionController::Routing::Routes.draw do |map|
-  resource :account, :controller => "people"
   
-  resource :user_session
+  # resource :account, :controller => "people"
   
-  resources :users do
-    match 'export', :on => :collection
-  end
-
-  resources :departments
-
-  resources :invoice_items
-
-  resources :invoices
-
-  resources :phones
-
-  resources :addresses
-
-  resources :degrees
-
-  match '/people/register', :to => 'people#register'
+  # resource :user_session
   
-  resources :people do
-    match 'export', :on => :collection
-    get 'autocomplete_degree_program_title', :on => :collection
-    get 'autocomplete_department_name', :on => :collection
-  end
+  # resources :users do
+  #   match 'export', :on => :collection
+  # end
+
+  scope "/admin" do
+    resource :home, :controller => 'home'
+
+    resources :people do
+      match 'export', :on => :collection
+      get 'autocomplete_degree_program_title', :on => :collection
+      get 'autocomplete_department_name', :on => :collection
+    end
   
-  match 'course_offerings/:id/syllabus_data/:file_name', :to => 'course_offerings#syllabus_data'
+    resources :departments
 
-  resources :course_offerings do
-    match 'export', :on => :collection
-    get 'autocomplete_course_number_and_name', :on => :collection
-    get 'autocomplete_person_fullname', :on => :collection
-  end
+    resources :invoice_items
 
-  resources :course_takens do
-    match 'export', :on => :collection
-  end
+    resources :invoices
 
-  resources :course_takens
+    resources :phones
 
-  resources :phones
+    resources :addresses
 
-  resources :phones
+    resources :degrees
 
-  resources :addresses
-
-  resources :majors
-
-  resources :degrees
-
-  resources :courses do
-    match 'export', :on => :collection
-    get 'autocomplete_department_name', :on => :collection
-    get 'autocomplete_person_fullname', :on => :collection
-  end
-
-  resources :course_takens
-
-  resources :courses do
-    match 'export', :on => :collection
-  end
-
-  resources :course_taken_statuses
-
-  resources :courses
-
-  resources :phone_types
-
-  resources :address_types
-
-  resources :person_types
-
-  resources :grade_types
-
-  resources :term_types
-
-  resources :term_types
+    match '/people/register', :to => 'people#register'
   
+  
+    match 'course_offerings/:id/syllabus_data/:file_name', :to => 'course_offerings#syllabus_data'
+
+    resources :course_offerings do
+      match 'export', :on => :collection
+      get 'autocomplete_course_number_and_name', :on => :collection
+      get 'autocomplete_person_fullname', :on => :collection
+    end
+
+    resources :course_takens do
+      match 'export', :on => :collection
+    end
+
+    resources :course_takens
+
+    resources :phones
+
+    resources :phones
+
+    resources :addresses
+
+    resources :majors
+
+    resources :degrees
+
+    resources :courses do
+      match 'export', :on => :collection
+      get 'autocomplete_department_name', :on => :collection
+      get 'autocomplete_person_fullname', :on => :collection
+    end
+
+    resources :course_takens
+
+    resources :courses do
+      match 'export', :on => :collection
+    end
+
+    resources :course_taken_statuses
+
+    resources :courses
+
+    resources :phone_types
+
+    resources :address_types
+
+    resources :person_types
+
+    resources :grade_types
+
+    resources :term_types
+
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -136,7 +141,7 @@ ActionController::Routing::Routes.draw do |map|
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
 
-  root :to => "home#index"
+  # root :to => "home#index"
   #map.connect ':controller/:action/:id'
   #map.connect ':controller/:action/:id.:format'
 end

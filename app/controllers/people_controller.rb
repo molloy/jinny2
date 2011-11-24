@@ -1,12 +1,19 @@
 class PeopleController < ApplicationController
-  before_filter :require_user, :load_search_params
+  before_filter :require_user, :load_search_params, :initialize_person_type
   
-  autocomplete :degree_program_title, { :degree_program => [:title] }, :display_value => :title, :full => true
+  autocomplete :degree_program, :title, :full => true
+  # autocomplete :degree_program_title, { :degree_program => [:title] }, :display_value => :title, :full => true
   autocomplete :department_name, { :department => [:name] }, :display_value => :name, :full => true
 
   helper_method :is_student_screen, :is_faculty_screen, :is_administrator_screen
 
   respond_to :xls, :only => :export
+
+  def initialize_person_type
+    if params[:person_type].nil?
+      params[:person_type] = PersonType.student.id.to_s
+    end
+  end
   
   def load_search_params
     @search = search_by_meta :person

@@ -24,7 +24,8 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 html {font-size: 62.5%;}
 body{
     background:#e5e4d9 url(/images/bg-all.jpg) repeat-x 50% 0;
-    font:1em Arial, Helvetica, sans-serif;
+    font:1.09em/1.397em Arial,Helvetica,sans-serif;
+/*    font:1em Arial, Helvetica, sans-serif;*/
     margin:0;
     color:#142835;
     min-width:1002px;
@@ -54,7 +55,17 @@ strong{
 
 /* Layouts */
 #wrapper{
-    width:960px;
+    width:1000px;
+    margin:0 auto;
+    padding:147px 0 0;
+    position:relative;
+}
+
+/*#page {
+	width: 960px;
+}*/
+#page_container {
+    width:1000px;
     margin:0 auto;
     padding:147px 0 0;
     position:relative;
@@ -63,11 +74,13 @@ strong{
 /* header */
 #header{
     background: url(/images/bg-header-pattern.png) no-repeat 594px 0;
+/*    padding:147px 0 0;*/
     padding:2px 0px 0px 0;
-    width:958px;
+    width:1000px;
     position:absolute;
     top:0;
-    left:0;
+    left:0;	
+/*    margin:0 auto;*/
 }
 #header:after{
     content:"";
@@ -91,7 +104,7 @@ strong{
 /* main-menu */
 .main-menu{
     padding:1px 0 13px;
-    width:960px;
+    width:1000px;
     top:109px;
     position:absolute;
     left:0;
@@ -105,7 +118,7 @@ strong{
     padding:0;
     list-style:none;
     text-transform:uppercase;
-    width:960px;
+    width:1000px;
     border-right:1px solid #fff;
     position:relative;
     color:#fff;
@@ -136,7 +149,7 @@ strong{
 }
 
 #j-center {
-	width: 728px;
+	width: 768px;
 	float: right;
 }
 
@@ -204,8 +217,40 @@ table.search_result tr > td {
 }
 
 #j-search-results {
-    width:958px;
+    width:1000px;
 	float: left;	
 }
 
 form.formtastic fieldset.left_aligned_buttons { padding-left: 0px; }
+
+footer{
+    color:#fff;
+    background: url(/images/bg-footer.jpg) repeat-x 50% 0;
+    text-align:center;
+/*    border-top:1px solid #b19995;*/
+    border-top:1px solid #000;
+	width: 100%;
+	padding: 20px 0 20px 0;
+	margin: 20px 0 0;
+}
+
+#footer ul{
+    margin:0 0 5px;
+    padding:0;
+    list-style:none;
+    text-align:center;
+}
+
+#footer li{
+    display:inline;
+    background: url(/images/divider2.gif) no-repeat 0 50%;
+    padding:0 3px 0 7px;
+}
+
+#footer li:first-child{background-image:none;}
+#footer a{
+    color:#fff;
+    text-decoration:none;
+}
+#footer a:hover{text-decoration:underline;}
+#footer p{margin:0;}

@@ -6,7 +6,7 @@ class Person < ActiveRecord::Base
   # has_many :course_offerings, :class_name => "CourseOffering", :finder_sql => 'SELECT co.*  FROM course_offerings WHERE co.instructor = #{id}'
   has_many :course_offerings, :foreign_key => "instructor"
   
-  has_one :user, :dependent => :destroy
+  # has_one :user, :dependent => :destroy
   
   belongs_to :degree_program
   belongs_to :department
@@ -26,29 +26,29 @@ class Person < ActiveRecord::Base
     return read_attribute(:surname) + ", " + read_attribute(:given_name)
   end
 
-  def dob_formatted
-    return dob
-  end
-  
-  def dob_formatted=(dob_str)
-    self.dob = Date.strptime(dob_str, '%m/%d/%Y') unless dob_str.blank?
-  end
-
-  def date_enrolled_formatted
-    return date_enrolled
-  end
-  
-  def date_enrolled_formatted=(date_enrolled_str)
-    self.date_enrolled = Date.strptime(date_enrolled_str, '%m/%d/%Y') unless date_enrolled_str.blank?
-  end
-  
-  def date_graduated_formatted
-    return date_graduated
-  end
-  
-  def date_graduated_formatted=(date_graduated_str)
-    self.date_graduated = Date.strptime(date_graduated_str, '%m/%d/%Y') unless date_graduated_str.blank?
-  end
+  # def dob_formatted
+  #   return dob
+  # end
+  # 
+  # def dob_formatted=(dob_str)
+  #   self.dob = Date.strptime(dob_str, '%m/%d/%Y') unless dob_str.blank?
+  # end
+  # 
+  # def date_enrolled_formatted
+  #   return date_enrolled
+  # end
+  # 
+  # def date_enrolled_formatted=(date_enrolled_str)
+  #   self.date_enrolled = Date.strptime(date_enrolled_str, '%m/%d/%Y') unless date_enrolled_str.blank?
+  # end
+  # 
+  # def date_graduated_formatted
+  #   return date_graduated
+  # end
+  # 
+  # def date_graduated_formatted=(date_graduated_str)
+  #   self.date_graduated = Date.strptime(date_graduated_str, '%m/%d/%Y') unless date_graduated_str.blank?
+  # end
 
   def picture_file=(input_file)
     self.picture = input_file.read
