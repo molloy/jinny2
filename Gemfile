@@ -1,11 +1,12 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.10'
+gem 'rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2', '0.2.6'
+<<<<<<< HEAD
 gem 'authlogic'
 gem 'formtastic'
 gem 'paperclip'
@@ -13,10 +14,20 @@ gem 'rails3-jquery-autocomplete'
 gem 'formtastic_datepicker-rails3x', :git => 'git://github.com/kristianmandrup/formtastic_datepicker-rails3x.git'
 gem 'meta_search'
 gem 'will_paginate'
+=======
+gem 'authlogic', '2.1.6'
+gem 'formtastic', '1.2.3'
+# gem 'formtastic', '2.0.0.rc1'
+gem 'paperclip', '2.3.8'
+gem 'rails3-jquery-autocomplete', '0.6.2'
+# gem 'rails3-jquery-autocomplete', '0.8.0'
+gem 'formtastic_datepicker_inputs'
+gem 'meta_search', '1.0.3'
+gem 'squeel', '0.8.4'
+gem 'will_paginate', '~> 3.0.pre2'
+>>>>>>> parent of 40a7515... before move to simple_form
 gem 'remotipart'
 gem 'to_xls'
-gem 'refinerycms',              '~> 1.0.8'
-gem 'refinerycms-i18n',         '~> 1.0.0'
 
 # Use unicorn as the web server
 # gem 'unicorn'

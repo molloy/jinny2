@@ -1,13 +1,8 @@
-<div id='side-login'>
-<%= semantic_form_for @user_session do |f| %>
+<%= semantic_form_for @user_session, :remote => true do |f| %>
 	<div id="user_session_errors" style="display:none"></div>
-	<% f.inputs :name => 'Login' do %>
-  	<%= f.input :email %>
-  	<%= f.input :password %>
-  	<%= f.input :remember_me, :as => 'boolean', :required => false %>
-  <% end %>
+	<%= f.input :email %>
+	<%= f.input :password %>
 	<% f.buttons do %>
 	 	<%= f.commit_button :label => 'Login' %>
 	<% end %>
 <% end %>
-</div>

@@ -1,4 +1,394 @@
-/*
-  Override default refinery homepage styles here.
-  These only apply to the homepage of your site.
-*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: trebuchet ms, helvetica, arial, sans-serif;
+    background: url(/images/bg_fade.gif) #f5f5f5 top repeat-x;
+}
+
+p, ul, ol, td {
+    font-size: 75%;
+    color: #333;
+}
+
+th {
+	text-align: left;
+}
+
+h1 {
+    color: #669933;
+    font-size: 100%;
+}
+
+h2 {
+    font-weight: normal;
+    font-size: 140%;
+}
+
+img {
+    border: none;
+}
+
+a {
+    color: #666;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    color: #669933;
+}
+
+.active {
+    color: #669933;
+}
+
+.underline {
+    border-bottom: 1px solid #669933;
+}
+
+.clear {
+    clear: both;
+}
+
+#wrap, .wrap {
+    background: url(/images/bg_shadow.gif) repeat-y;
+    margin: auto;
+    min-height: 500px;
+    width: 960px;
+}
+
+#left {
+    float: left;
+    background: url(/images/bg_shadow_left.gif) no-repeat;
+    width: 10px;
+    height: 500px;
+}
+
+#center {
+    float: left;
+    padding: 0pt 40px;
+    width: 860px;
+    background: white;
+}
+
+#right {
+    float: left;
+    background: url(/images/bg_shadow_right.gif) no-repeat;
+    width: 10px;
+    height: 455px;
+}
+
+#bottom {
+    clear: both;
+    height: 10px;
+    background: url(/images/bg_shadow_bottom.gif) #f5f5f5 top no-repeat;
+    margin-bottom: 50px;
+}
+
+#logo_header {
+    margin: auto;
+    width: 830px;
+    height: 90px;
+}
+
+#logo_header h1 {
+    text-indent: -9999px;
+    overflow: hidden;
+    float: left;
+}
+
+#logo_header h1 a {
+    /*background: url(/images/logo_420mac.gif) left no-repeat;*/
+    width: 370px;
+    height: 90px;
+    display: block;
+}
+
+#logo_header p {
+    color: #666;
+    text-align: right;
+    font-size: 70%;
+}
+
+#header, #header_container {
+    width: 860px;
+    hieght: 270px;
+}
+
+.nav {
+    float: left;
+    width: 169px;
+}
+
+.nav ul {
+    list-style: none;
+    padding: 0 20px;
+}
+
+.nav li {
+    font-size: 13px;
+    line-height: 25px;
+}
+
+.top, .bottom {
+    height: 20px; /* same value as corner radius */
+    overflow: hidden; /* makes IE respect our height */
+}
+
+.top img, .bottom img {
+    vertical-align: top;
+}
+
+.content, .bottom, .top {
+    float: left;
+    width: 100%;
+}
+
+.top, .bottom {
+    padding-right: 2px; /* compensates for the extra 1 border pixels in .content */
+}
+
+/* white box styles */
+.white .top {
+    background: url(/images/boxes/white/2.gif) no-repeat right top; /* top border and top right corner */
+}
+
+.white .content {
+    background: white; /* right border */
+    border-left: 1px solid #dedede; /* left border */
+    border-right: 1px solid #dedede;
+}
+
+.white .bottom {
+    background: url(/images/boxes/white/3.gif) no-repeat right top; /* bottom border and bottom right corner */
+}
+
+/* white box styles */
+.green .top {
+    background: url(/images/boxes/green/2.gif) no-repeat right top; /* top border and top right corner */
+}
+
+.green .content {
+    background: #e5ffab; /* right border */
+    border-left: 1px solid #669933; /* left border */
+    border-right: 1px solid #669933;
+}
+
+.green .bottom {
+    background: url(/images/boxes/green/3.gif) no-repeat right top; /* bottom border and bottom right corner */
+}
+
+.content p {
+    padding: 2px 10px 8px;
+    color: #666;
+}
+
+#short_nav .content {
+    min-height: 100px;
+}
+
+#online_verification p {
+    text-align: center;
+}
+
+.image_header {
+    float: right;
+    width: 616px;
+    padding: 40px 0 0 60px;
+    height: 100px;
+}
+
+.image_header h1, .image_header h2, .image_header_welcome h1, .image_header_welcome h2 {
+    padding-bottom: 3px;
+}
+
+.image_header h1, .image_header_welcome h1 {
+    font-size: 140%;
+    height: 29px;
+}
+
+.image_header h2, .image_header_welcome h2 {
+    font-size: 100%;
+    height: 17px;
+}
+
+.image_header_welcome h2 {
+    width: 250px;
+}
+
+.image_header_welcome {
+    float: right;
+    width: 616px;
+    padding: 40px 0 0 60px;
+    height: 253px;
+}
+
+#welcome_head {
+    background: url(/images/head_welcome.jpg) top no-repeat;
+}
+
+#facts_head {
+    background: url(/images/head_facts.jpg) top no-repeat;
+}
+
+#appointment_head {
+    background: url(/images/head_appointment.jpg) top no-repeat;
+}
+
+#contact_head {
+    background: url(/images/head_contact.jpg) top no-repeat;
+}
+
+#team_head {
+    background: url(/images/team/head_team.jpg) top no-repeat;
+}
+
+#team_head h1 {
+    background: url(/images/team/team1.gif) top left no-repeat;
+}
+
+#team_head h2 {
+    background: url(/images/team/team2.gif) top left no-repeat;
+}
+
+#questions_head {
+    background: url(/images/head_questions.jpg) top no-repeat;
+}
+
+#questions_head h1 {
+    background: url(/images/questions1.gif) top left no-repeat;
+}
+
+#questions_head h2 {
+    background: url(/images/questions2.gif) top left no-repeat;
+}
+
+/* MAIN */
+#main {
+    clear: both;
+    padding-top: 12px;
+    width: 860px;
+}
+
+#main a {
+    color: #669933;
+    text-decoration: none;
+}
+
+#main a:hover {
+    color: #669933;
+    text-decoration: underline;
+}
+
+#mainbody {
+    float: left;
+    margin-bottom: 30px;
+    padding: 0px 0 0 30px;
+	width: 650px;
+}
+
+#mainbody h1 {
+    padding: 0px 0 5px;
+}
+
+#mainbody .block {
+    float: left;
+    width: 616px;
+    padding-left: 20px;
+    line-height: 19px;
+}
+
+#mainbody li {
+    margin-left: 20px;
+}
+
+#mainbody li p {
+    font-size: 100%;
+}
+
+#mainbody li ul {
+    font-size: 100%;
+}
+
+#welcome_block h1 {
+    font-size: 100%;
+}
+
+#welcome_block p {
+    line-height: 32px;
+    font-size: 90%;
+}
+
+.bling {
+    font-size: 150%;
+    color: #669933;
+}
+
+/* FOOTER */
+#footer {
+    clear: both;
+    border-top: 1px dotted #ccc;
+    padding: 15px 0 40px;
+    margin-top: 30px;
+    width: 860px;
+}
+
+#footer p {
+    float: left;
+    font-size: 70%;
+}
+
+#footer p, #footer li {
+    color: #666;
+}
+
+#footer ul {
+    float: right;
+    list-style: none;
+    margin: 0;
+}
+
+#footer li {
+    display: inline;
+    font-size: 95%;
+}
+
+#verification h1 {
+    padding: 0px 0px 5px;
+    text-align: center;
+}
+
+#verification p {
+    padding: 0px 10px 5px;
+    text-align: left;
+}
+
+#search_result {
+	float: left;
+    padding: 0 0 0 0px;
+    width: 650px;
+}
+
+.search_result {
+    border-collapse: collapse;
+}
+
+.search_result td {
+    border-collapse: collapse;
+    border-right: 0px none;
+    border-top: 1px dotted red;
+    padding-right: 10px;
+    vertical-align: text-top;
+}
+
+.search_result th {
+    text-align: left;
+    padding-right: 10px;
+}
+
+.course_takens td {
+	padding-right: 10px;
+}

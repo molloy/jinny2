@@ -2,7 +2,7 @@
 	<%= course_taken.inputs do %>
 		<%= course_taken.input :course_offering_id, :as => :hidden %>
 		<%= course_taken.input :course_id, :as => :hidden %>
-		<%= course_taken.input :course_autocomplete, :as => :autocomplete, :url => autocomplete_course_number_and_name_course_offerings_path, :limit => 20, :id_element => ('#' << form_tag_id(course_taken.object_name, 'course_id')), :label => 'Course', :required => true %>
+		<%= course_taken.autocompleted_input :course_autocomplete, :url => autocomplete_course_number_and_name_course_offerings_path, :limit => 20, :id_element => ('#' << form_tag_id(course_taken.object_name, 'course_id')), :label => 'Course', :required => true %>
 		<%= course_taken.input :year, :required => true %>
 		<%= course_taken.input :term_type_id, :as => :select, :collection => TermType.all, :label => 'Term', :required => true %>
 		<%= course_taken.input :course_taken_status, :label => 'Status', :required => true %>
