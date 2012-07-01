@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/kristianmandrup/formtastic_datepicker-rails3x.git
+  revision: d66ab9db54bde442aa158467f550c2bae7961207
+  specs:
+    formtastic_datepicker-rails3x (1.0.0)
+      actionpack (>= 3.0.10)
+      activesupport (>= 3.0.10)
+      formtastic (>= 2.0.0)
+      i18n (>= 0.4.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -49,11 +59,6 @@ GEM
       abstract (>= 1.0.0)
     formtastic (2.0.2)
       rails (~> 3.0)
-    formtastic_datepicker_inputs (1.0.0)
-      actionpack (>= 2.3.7)
-      activesupport (>= 2.3.7)
-      formtastic
-      i18n (>= 0.4.0)
     friendly_id_globalize3 (3.2.1.5)
       babosa (~> 0.3.0)
     globalize3 (0.1.0)
@@ -186,7 +191,7 @@ PLATFORMS
 DEPENDENCIES
   authlogic
   formtastic
-  formtastic_datepicker_inputs
+  formtastic_datepicker-rails3x!
   meta_search
   mysql2 (= 0.2.6)
   paperclip
